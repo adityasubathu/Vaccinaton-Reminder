@@ -3,12 +3,17 @@
     <group android:checkableBehavior="single">
         <!--TODO: use <item> tags for adding new options in the nav menu-->
 
-        <!--Example
+        <!--Example-->
+
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/home"/>
 
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/import" />-->
+            android:icon="@drawable/child"
+            android:title="@string/manage_children" />
 
     </group>
 </menu>

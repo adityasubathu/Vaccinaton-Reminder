@@ -10,4 +10,6 @@
     <string name="full_name">Full Name</string>
     <string name="sign_up_alert">User Not Registered. Please Sign Up.</string>
     <string name="welcome">"Welcome, "</string>
+    <string name="manage_children">Manage Children</string>
+    <string name="home">Home</string>
 </resources>

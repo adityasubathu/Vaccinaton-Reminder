@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent i = new Intent(LoginActivity.this, MainFragmentHolder.class);
                 startActivity(i);
                 finish();
 
@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
             alertDialog.dismiss();
 
-            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent i = new Intent(LoginActivity.this, MainFragmentHolder.class);
             startActivity(i);
             finish();
         }

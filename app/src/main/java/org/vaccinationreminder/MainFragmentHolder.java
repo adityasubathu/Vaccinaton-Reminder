@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity {
+public class MainFragmentHolder extends AppCompatActivity {
 
     TextView welcomeNameField;
     String[] arr;
@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_fragment_holder);
 
         Toolbar toolbar = findViewById(R.id.activity_home_toolbar);
         setSupportActionBar(toolbar);
