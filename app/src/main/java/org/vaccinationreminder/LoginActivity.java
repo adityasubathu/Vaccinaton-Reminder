@@ -1,4 +1,4 @@
-package org.vaccinationdatabase;
+package org.vaccinationreminder;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

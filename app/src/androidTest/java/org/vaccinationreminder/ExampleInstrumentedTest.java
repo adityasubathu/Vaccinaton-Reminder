@@ -1,4 +1,4 @@
-package org.vaccinationdatabase;
+package org.vaccinationreminder;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
