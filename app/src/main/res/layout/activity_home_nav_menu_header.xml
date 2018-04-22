@@ -4,9 +4,11 @@
     android:layout_height="192dp"
     android:background="?attr/colorPrimaryDark"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:theme="@style/header"
     android:orientation="vertical"
     android:gravity="bottom">
+
+<!--TODO: design a simple header for the nav meu-->
 
     <TextView
         android:layout_width="match_parent"
