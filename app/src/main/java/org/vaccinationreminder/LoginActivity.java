@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton, signupButton;
     SharedPreferences mySharedPrefs;
     View signupDialog;
+    AlertDialog alertDialog;
 
     @SuppressLint("InflateParams")
 
@@ -73,9 +74,10 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
             }
+
         } else {
 
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog = new AlertDialog.Builder(this).create();
 
             if (signupDialog.getParent() != null) {
 
@@ -117,6 +119,8 @@ public class LoginActivity extends AppCompatActivity {
             e.putString("fullName", fullName);
 
             e.apply();
+
+            alertDialog.dismiss();
 
             Intent i = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(i);
