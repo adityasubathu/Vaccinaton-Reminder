@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Vaccination Database</string>
+    <string name="vaccine_reminder">Vaccine Reminder</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="signup">Signup</string>
+    <string name="syringeimage">syringeImage</string>
+    <string name="full_name">Full Name</string>
+    <string name="sign_up_alert">User Not Registered. Please Sign Up.</string>
+</resources>
