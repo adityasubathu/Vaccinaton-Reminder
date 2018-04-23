@@ -1,24 +1,23 @@
 package org.vaccinationreminder;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
 import java.util.Objects;
 
 public class MainFragmentHolder extends AppCompatActivity {
 
-    TextView welcomeNameField;
-    String[] arr;
-    String firstName;
+    FrameLayout fragmentHolder;
 
     DrawerLayout HomeActivityNavDrawer;
 
@@ -31,35 +30,28 @@ public class MainFragmentHolder extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.activity_home_toolbar);
         setSupportActionBar(toolbar);
 
+        fragmentHolder = findViewById(R.id.fragment_holder);
+
         ActionBar actionbar = getSupportActionBar();
         Objects.requireNonNull(actionbar).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(actionbar).setHomeAsUpIndicator(R.drawable.ic_menu);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        welcomeNameField = findViewById(R.id.nameTextView);
+        HomeFragment homeFragment = new HomeFragment();
 
-        SharedPreferences myPrefs = getSharedPreferences("userInfo", MODE_PRIVATE);
-
-        String name = myPrefs.getString("fullName", null);
-
-        if (name != null) {
-
-            arr = name.split(" ");
-
-        }
-
-        if (arr != null) {
-
-            firstName = arr[0];
-            welcomeNameField.setText(firstName);
-
-        }
+        fragmentTransaction.add(R.id.fragment_holder, homeFragment);
+        fragmentTransaction.commit();
 
         HomeActivityNavDrawer = findViewById(R.id.activity_home_drawer_layout);
 
 
         NavigationView HomeActivityNavView = findViewById(R.id.activity_home_nav_menu);
+
+        HomeActivityNavView.setCheckedItem(R.id.home);
+
         HomeActivityNavView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
