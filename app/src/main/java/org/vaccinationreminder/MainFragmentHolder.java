@@ -37,10 +37,9 @@ public class MainFragmentHolder extends AppCompatActivity {
         Objects.requireNonNull(actionbar).setHomeAsUpIndicator(R.drawable.ic_menu);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        HomeFragment homeFragment = new HomeFragment();
+        final HomeFragment homeFragment = new HomeFragment();
 
         fragmentTransaction.add(R.id.fragment_holder, homeFragment);
         fragmentTransaction.commit();
@@ -56,14 +55,22 @@ public class MainFragmentHolder extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        // set item as selected to persist highlight
+
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         menuItem.setChecked(true);
-                        // close drawer when item is tapped
                         HomeActivityNavDrawer.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+                        if (menuItem.getItemId() == R.id.home_fragment) {
+                            fragmentTransaction.replace(R.id.fragment_holder, homeFragment);
+                        }
 
+                        if (menuItem.getItemId() == R.id.child_manager) {
+                            ChildManagerFragment childManagerFragment = new ChildManagerFragment();
+                            fragmentTransaction.replace(R.id.fragment_holder, childManagerFragment);
+                        }
+                        fragmentTransaction.commit();
                         return true;
                     }
                 });
