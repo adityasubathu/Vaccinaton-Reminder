@@ -1,5 +1,6 @@
 package org.vaccinationreminder;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,8 +18,6 @@ import java.util.Objects;
 
 public class MainFragmentHolder extends AppCompatActivity {
 
-    FrameLayout fragmentHolder;
-
     DrawerLayout HomeActivityNavDrawer;
 
     @Override
@@ -27,10 +26,9 @@ public class MainFragmentHolder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_holder);
 
+
         Toolbar toolbar = findViewById(R.id.activity_home_toolbar);
         setSupportActionBar(toolbar);
-
-        fragmentHolder = findViewById(R.id.fragment_holder);
 
         ActionBar actionbar = getSupportActionBar();
         Objects.requireNonNull(actionbar).setDisplayHomeAsUpEnabled(true);
@@ -40,16 +38,14 @@ public class MainFragmentHolder extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         final HomeFragment homeFragment = new HomeFragment();
+        final ChildManagerFragment childManagerFragment = new ChildManagerFragment();
 
-        fragmentTransaction.add(R.id.fragment_holder, homeFragment);
+        fragmentTransaction.add(R.id.fragment_holder, homeFragment, "home");
         fragmentTransaction.commit();
 
         HomeActivityNavDrawer = findViewById(R.id.activity_home_drawer_layout);
-
-
         NavigationView HomeActivityNavView = findViewById(R.id.activity_home_nav_menu);
-
-        HomeActivityNavView.setCheckedItem(R.id.home);
+        HomeActivityNavView.setCheckedItem(R.id.home_fragment);
 
         HomeActivityNavView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -57,18 +53,17 @@ public class MainFragmentHolder extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                         FragmentManager fragmentManager = getSupportFragmentManager();
-
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
                         menuItem.setChecked(true);
                         HomeActivityNavDrawer.closeDrawers();
 
                         if (menuItem.getItemId() == R.id.home_fragment) {
-                            fragmentTransaction.replace(R.id.fragment_holder, homeFragment);
+                            fragmentTransaction.replace(R.id.fragment_holder, homeFragment, "home");
                         }
 
                         if (menuItem.getItemId() == R.id.child_manager) {
-                            ChildManagerFragment childManagerFragment = new ChildManagerFragment();
-                            fragmentTransaction.replace(R.id.fragment_holder, childManagerFragment);
+                            fragmentTransaction.replace(R.id.fragment_holder, childManagerFragment, "childManager");
                         }
                         fragmentTransaction.commit();
                         return true;

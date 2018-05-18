@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+
+    <TextView
+        android:id="@+id/addChildTopTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/add_child_alert"
+        android:textSize="22sp" />
+
+    <RadioGroup
+        android:id="@+id/addChildRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addChildTopTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/gender"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/male"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female"
+            android:textSize="18sp" />
+
+    </RadioGroup>
+
+
+    <LinearLayout
+        android:id="@+id/editorAddChildLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addChildRadioGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="40dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/fullNameAddChildField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="#E3E1E1"
+            android:hint="@string/full_name"
+            android:inputType="textCapWords"
+            android:padding="4dp"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/dateOFBirthAddChildField"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:background="#E3E1E1"
+                android:hint="@string/date_of_birth"
+                android:inputType="date"
+                android:padding="4dp"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/childDOBPicker"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:contentDescription="@string/childdobpicker"
+                android:src="@drawable/ic_date" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

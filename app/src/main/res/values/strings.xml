@@ -12,4 +12,12 @@
     <string name="welcome">"Welcome, "</string>
     <string name="manage_children">Manage Children</string>
     <string name="home">Home</string>
+    <string name="add_new_child">Add New Child</string>
+    <string name="add_child_alert">Please enter the following details about your child.</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="childdobpicker">childDOBPicker</string>
+    <string name="gender">Gender:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="empty_child_name_toast">Please Enter your Child\'s Name</string>
 </resources>
