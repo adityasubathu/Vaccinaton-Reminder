@@ -1,6 +1,5 @@
 package org.vaccinationreminder;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,7 +11,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import java.util.Objects;
 
@@ -38,7 +36,7 @@ public class MainFragmentHolder extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         final HomeFragment homeFragment = new HomeFragment();
-        final ChildManagerFragment childManagerFragment = new ChildManagerFragment();
+        final AddNewChildFragment childManagerFragment = new AddNewChildFragment();
 
         fragmentTransaction.add(R.id.fragment_holder, homeFragment, "home");
         fragmentTransaction.commit();

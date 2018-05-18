@@ -13,7 +13,7 @@
         <item
             android:id="@+id/child_manager"
             android:icon="@drawable/child"
-            android:title="@string/manage_children" />
+            android:title="@string/add_children" />
 
     </group>
 </menu>
