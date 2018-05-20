@@ -1,42 +1,37 @@
 package org.vaccinationreminder;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class Function {
 
-    List<String> vaccineList;
+    private String[] vaccineList = {"BCG", "OPV 0", "Hep–B 1", "DTwP 1", "IPV 1", "Hep–B 2", "Hib 1", "Rotavirus 1",
+            "PCV 1", "DTwP 2", "IPV 2", "Hib 2", "Rotavirus 2", "PCV 2", "DTwP 3", "IPV 3", "Hib 3", "Rotavirus 3",
+            "PCV 3", "OPV 1", "Hep–B 3", "MMR 1", "Typhoid Conjugate Vaccine", "Hep–A 1", "MMR 2", "Varicella 1",
+            "PCV booster", "DTwP B1/DTaP B1", "IPV B1", "Hib B1", "Hep–A 2", "Booster of Typhoid", "Conjugate Vaccine",
+            "DTwP B2/DTaP B2", "Varicella 2", "MMR 3", "Tdap/Td", "HPV"};
+    
+    private int[] weekList = {0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 26, 26, 38,
+            52, 52, 64, 64, 64, 78, 78, 78, 78, 104, 104, 216, 216, 216, 216, 520};
 
+    private long getNextDate(int dateOfBirth) {
 
-    private long getOneMonthDuration(){
-        // get today's date
+        int offset = 0;
+
         Calendar cal = Calendar.getInstance();
-        // get current month
-        int currentMonth = cal.get(Calendar.MONTH);
 
-        // move month ahead
-        currentMonth++;
-        // check if has not exceeded threshold of december
+        int nextDate = cal.get(Calendar.WEEK_OF_YEAR + offset);
 
-        if(currentMonth > Calendar.DECEMBER){
-            // alright, reset month to jan and forward year by 1 e.g fro 2013 to 2014
-            currentMonth = Calendar.JANUARY;
-            // Move year ahead as well
-            cal.set(Calendar.YEAR, cal.get(Calendar.YEAR)+1);
-        }
+            int week = nextDate/52;
 
-        // reset calendar to next month
-        cal.set(Calendar.MONTH, currentMonth);
-        // get the maximum possible days in this month
-        int maximumDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+            nextDate = cal.get(nextDate - (52 * week));
 
-        // set the calendar to maximum day (e.g in case of fEB 28th, or leap 29th)
-        cal.set(Calendar.DAY_OF_MONTH, maximumDay);
-        // this is time one month ahead
+            cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR) + week);
 
+        cal.set(Calendar.WEEK_OF_YEAR, nextDate);
 
-
-        return (cal.getTimeInMillis()); // this is what you set as trigger point time i.e one month after
+        return (cal.getTimeInMillis());
 
     }
 

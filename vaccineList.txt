@@ -1,0 +1,90 @@
+BIRTH
+
+Bacillus Calmette–Guérin (BCG)
+Oral polio vaccine (OPV 0)
+Hepatitis B (Hep – B1)
+Diptheria, Tetanus and Pertussis vaccine (DTwP 1)
+Inactivated polio vaccine (IPV 1)
+
+6 WEEKS
+
+Hepatitis B  (Hep – B2)
+Haemophilus influenzae type B (Hib 1)
+Rotavirus 1
+Pneumococcal conjugate vaccine (PCV 1)
+Diptheria, Tetanus and Pertussis vaccine (DTwP 2)
+Inactivated polio vaccine (IPV 2)
+
+10 WEEKS
+
+Haemophilus influenzae type B (Hib 2)
+Rotavirus 2
+Pneumococcal conjugate vaccine (PCV 2)
+Diptheria, Tetanus and Pertussis vaccine (DTwP 3)
+Inactivated polio vaccine (IPV 3)
+Haemophilus influenzae type B (Hib 3)
+Rotavirus 3
+Pneumococcal conjugate 
+vaccine (PCV 3)
+
+26 WEEKS
+
+Oral polio vaccine (OPV 1)
+Hepatitis B (Hep – B3)
+
+38 WEEKS
+
+Measles, Mumps, and Rubella (MMR – 1)
+
+52 WEEKS
+
+Typhoid Conjugate Vaccine
+Hepatitis A (Hep – A1)
+
+64 WEEKS
+
+Measles, Mumps, and Rubella (MMR 2)
+Varicella 1
+PCV booster
+
+78 WEEKS
+
+Diphtheria, Perussis, and Tetanus (DTwP B1/DTaP B1)
+Inactivated polio vaccine (IPV B1)
+Haemophilus influenzae type B (Hib B1)
+Hepatitis A (Hep – A2)
+
+104 WEEKS
+
+Booster of Typhoid
+Conjugate Vaccine
+
+216 WEEKS
+
+Diphtheria, Perussis, and Tetanus (DTwP B2/DTaP B2)
+Varicella 2
+Measles, Mumps, and Rubella (MMR 3)
+Tdap/Td
+
+520 WEEKS
+
+Human Papilloma Virus (HPV)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
