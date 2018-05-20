@@ -1,14 +1,12 @@
 package org.vaccinationreminder;
 
 import android.app.DatePickerDialog;
-import android.support.v4.app.FragmentTransaction;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +24,10 @@ public class AddNewChildFragment extends Fragment {
 
     View v;
     int selectedGenderId = 0, year, month, day, hour, minute;
-    SharedPreferences preferences;
     TextView childNameTextView, DateOfBirthTextView;
     ImageView calenderDialogOpener;
     Button addChildConfirmButton;
+    databaseHandler helper;
 
     @Nullable
     @Override
@@ -43,6 +41,8 @@ public class AddNewChildFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        helper = new databaseHandler(getActivity());
 
         final RadioGroup childGenderRadioGroup = v.findViewById(R.id.addChildRadioGroup);
 
@@ -58,9 +58,6 @@ public class AddNewChildFragment extends Fragment {
         calenderDialogOpener = v.findViewById(R.id.childDOBPicker);
         DateOfBirthTextView = v.findViewById(R.id.dateOFBirthAddChildField);
 
-        preferences = Objects.requireNonNull(getActivity()).getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor e = preferences.edit();
-
 
         calenderDialogOpener.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +71,7 @@ public class AddNewChildFragment extends Fragment {
                 hour = cal.get(Calendar.HOUR_OF_DAY);
                 minute = cal.get(Calendar.MINUTE);
 
-                DatePickerDialog dp = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dp = new DatePickerDialog(Objects.requireNonNull(getActivity()), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int y, int m, int d) {
 
@@ -94,6 +91,7 @@ public class AddNewChildFragment extends Fragment {
 
                 String childFullName = childNameTextView.getText().toString();
                 String dateOfBirth = DateOfBirthTextView.getText().toString();
+                String male = "Male", female = "Female";
 
                 if (childFullName.isEmpty() || dateOfBirth.isEmpty() || selectedGenderId == 0) {
 
@@ -101,26 +99,35 @@ public class AddNewChildFragment extends Fragment {
 
                 } else {
 
-                    e.putString("childName", childFullName);
-                    e.putString("childDOB", dateOfBirth);
+                    long id = 0;
 
                     if (selectedGenderId == R.id.male) {
-                        e.putString("childGender", "Male");
-                    } else {
-                        e.putString("childGender", "female");
+
+                        id = helper.insertData(childFullName, dateOfBirth, male);
+
+                    } else if (selectedGenderId == R.id.female) {
+
+                        id = helper.insertData(childFullName, dateOfBirth, female);
+
                     }
-                    e.apply();
 
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
+                    if (id <= 0) {
 
-                    ft.replace(R.id.fragment_holder, new HomeFragment());
-                    ft.commit();
+                        Message.message(getActivity(), "Insertion Unsuccessful");
 
+                    } else {
+
+                        Message.message(getActivity(), "Insertion Successful");
+
+                        FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+
+                        ft.replace(R.id.fragment_holder, new HomeFragment());
+                        ft.commit();
+
+                    }
                 }
-
             }
         });
-
     }
 }
