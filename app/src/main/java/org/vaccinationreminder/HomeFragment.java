@@ -121,8 +121,6 @@ class childListAdapter extends BaseAdapter {
 
         TextView tv = convertView.findViewById(R.id.childName);
 
-        String s = list.get(position);
-
         tv.setText(list.get(position));
 
         return convertView;
