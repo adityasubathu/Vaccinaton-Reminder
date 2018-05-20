@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         v = getLayoutInflater().inflate(R.layout.home_fragment, container, false);
-
+        setHasOptionsMenu(true);
         return v;
     }
 
@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
             Intent i = new Intent(getActivity(), LoginActivity.class);
             startActivity(i);
             Objects.requireNonNull(getActivity()).finish();
-
         }
 
         return super.onOptionsItemSelected(item);
