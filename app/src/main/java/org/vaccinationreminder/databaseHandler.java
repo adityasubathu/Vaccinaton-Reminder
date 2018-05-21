@@ -44,19 +44,19 @@ public class databaseHandler {
                 String name = cursor.getString(cursor.getColumnIndex(myDbHelper.NAME));
                 String dob = cursor.getString(cursor.getColumnIndex(myDbHelper.DATE_OF_BIRTH));
                 String gender = cursor.getString(cursor.getColumnIndex(myDbHelper.GENDER));
-                buffer.append(cid).append(" ").append(name).append(" ").append(dob).append(" ").append(gender).append(" \n");
+                buffer.append(cid).append("  ").append(name).append("  ").append(dob).append("  ").append(gender).append("  ");
 
             }
             return buffer.toString();
 
         }
 
-        public int delete(String childname) {
+        public void delete(String childname) {
 
             SQLiteDatabase db = myHelper.getWritableDatabase();
             String[] whereArgs = {childname};
 
-            return db.delete(myDbHelper.TABLE_NAME,myDbHelper.NAME + " = ?", whereArgs);
+            db.delete(myDbHelper.TABLE_NAME,myDbHelper.NAME + " = ?", whereArgs);
         }
 
         public int updateName(String oldName, String newName) {

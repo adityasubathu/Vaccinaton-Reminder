@@ -6,8 +6,40 @@
     <TextView
         android:id="@+id/childName"
         android:layout_width="wrap_content"
-        android:textSize="20sp"
         android:layout_height="wrap_content"
-        android:padding="4dp" />
+        android:padding="4dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/dobViewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/childName"
+        android:padding="4dp"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/nextVaccineListLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/dobViewer"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nextVaccineList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/offsetViewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/nextVaccineListLayout"
+        android:padding="4dp"
+        android:textSize="20sp" />
 
 </RelativeLayout>
