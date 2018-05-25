@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static String email, password, username, fullName;
+    static String email, password, username, fullName, storedUsername, storedPassword;
     EditText usernameField, passwordField, emailSignupField, usernameSignupField, passwordSignupField, fullNameSignupField;
     Button loginButton, signupButton;
     SharedPreferences mySharedPrefs;
@@ -50,14 +50,14 @@ public class LoginActivity extends AppCompatActivity {
 
         mySharedPrefs = getSharedPreferences("userInfo", MODE_PRIVATE);
 
-        String storedName = mySharedPrefs.getString("username", null);
-        String storedPassword = mySharedPrefs.getString("password", null);
+        storedUsername = mySharedPrefs.getString("username", null);
+        storedPassword = mySharedPrefs.getString("password", null);
 
         if (password.isEmpty() || username.isEmpty()) {
 
             Toast.makeText(this, "Please enter valid details", Toast.LENGTH_SHORT).show();
 
-        } else if (username.equals(storedName)) {
+        } else if (username.equals(storedUsername)) {
 
             if (password.isEmpty()) {
 

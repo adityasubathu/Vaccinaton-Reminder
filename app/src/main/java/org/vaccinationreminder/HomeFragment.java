@@ -1,11 +1,19 @@
 package org.vaccinationreminder;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +33,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
 
@@ -55,11 +65,11 @@ public class HomeFragment extends Fragment {
 
         arr = data.split(" {2}");
 
-        for (int i=0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
 
             if (isInteger(arr[i])) {
-                childrenList.add(arr[i+1]);
-                DOBList.add(arr[i+2]);
+                childrenList.add(arr[i + 1]);
+                DOBList.add(arr[i + 2]);
             }
 
         }
@@ -74,6 +84,8 @@ public class HomeFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String deletedName = (String) adap.getItem(position);
+
+                Toast.makeText(getActivity(), childrenList.get(position) + " deleted", Toast.LENGTH_SHORT).show();
 
                 helper.delete(deletedName);
                 adap.notifyDataSetChanged();
@@ -178,13 +190,14 @@ class childListAdapter extends BaseAdapter {
 
         StringBuilder vaccineList = new StringBuilder();
 
-        for (String s : function.nextVaccines)
-        {
+        for (String s : function.nextVaccines) {
             vaccineList.append(s).append("\n");
         }
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
+
+        setSilentReminder(offsetMilliSeconds, "Get Vaccinations " + vaccineList);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
@@ -194,6 +207,62 @@ class childListAdapter extends BaseAdapter {
         tv4.setText(vaccineList);
 
         return convertView;
+    }
+
+    private void setSilentReminder(long startTime, String title) {
+
+        ContentResolver cr = c.getContentResolver();
+        ContentValues values = new ContentValues();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(startTime);
+
+        String dtStart = formatter.format(calendar.getTime());
+
+        values.put(CalendarContract.Events.DTSTART, dtStart);
+        values.put(CalendarContract.Events.TITLE, title);
+        values.put(CalendarContract.Events.DESCRIPTION, "");
+
+        TimeZone timeZone = TimeZone.getDefault();
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+
+// Default calendar
+        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+// Set Period for 1 Hour
+        values.put(CalendarContract.Events.DURATION, "+P24H");
+
+        values.put(CalendarContract.Events.HAS_ALARM, 1);
+
+// Insert event to calendar
+        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.checkSelfPermission(c, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED){
+
+                ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.READ_CALENDAR,
+                        Manifest.permission.WRITE_CALENDAR}, 1);
+            }
+
+            ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+        }
+
+        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_CALENDAR}, 1);
+
+        }
+
+
+        Cursor cursor =
+                CalendarContract.Instances.query(c.getContentResolver(), null, startTime, startTime + (24 * 60 * 60 * 1000), title);
+        if (cursor.getCount() > 0) {
+            Toast.makeText(c, "Event already exists", Toast.LENGTH_SHORT).show();
+        } else {
+
+            cr.insert(CalendarContract.Events.CONTENT_URI, values);
+        }
+
     }
 }
 

@@ -19,7 +19,7 @@ public class Function {
     private int[] weekList = {0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 26, 26, 38,
             52, 52, 64, 64, 64, 78, 78, 78, 78, 104, 104, 216, 216, 216, 216, 520}; //Array for number of weeks each of the above vaccine is due
 
-    private int DOByear, DOBweekOfYear;;
+    private int DOByear, DOBweekOfYear;
     private static int offset = 0, currentOffset;
 
     public List<String> nextVaccines;
