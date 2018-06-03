@@ -184,13 +184,13 @@ class childListAdapter extends BaseAdapter {
         TextView tv3 = convertView.findViewById(R.id.offsetViewer);
         TextView tv4 = convertView.findViewById(R.id.nextVaccineList);
 
-        Function function = new Function();
+        OffsetCalculator offsetCalculator = new OffsetCalculator();
 
-        long offsetMilliSeconds = function.getNextDate(list2.get(position));
+        long offsetMilliSeconds = offsetCalculator.getNextDate(list2.get(position));
 
         StringBuilder vaccineList = new StringBuilder();
 
-        for (String s : function.nextVaccines) {
+        for (String s : offsetCalculator.nextVaccines) {
             vaccineList.append(s).append("\n");
         }
 

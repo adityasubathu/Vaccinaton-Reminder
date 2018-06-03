@@ -15,5 +15,11 @@
             android:icon="@drawable/child"
             android:title="@string/add_children" />
 
+        <item
+            android:id="@+id/vaccinesInfo"
+            android:title="Vaccines Info"
+            android:icon="@drawable/ic_info"/>
+
+
     </group>
 </menu>

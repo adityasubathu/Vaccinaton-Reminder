@@ -37,6 +37,7 @@ public class MainFragmentHolder extends AppCompatActivity {
 
         final HomeFragment homeFragment = new HomeFragment();
         final AddNewChildFragment childManagerFragment = new AddNewChildFragment();
+        final VaccineInfoFragment vaccineInfoFragment = new VaccineInfoFragment();
 
         fragmentTransaction.add(R.id.fragment_holder, homeFragment, "home");
         fragmentTransaction.commit();
@@ -63,6 +64,11 @@ public class MainFragmentHolder extends AppCompatActivity {
                         if (menuItem.getItemId() == R.id.child_manager) {
                             fragmentTransaction.replace(R.id.fragment_holder, childManagerFragment, "childManager");
                         }
+
+                        if (menuItem.getItemId() == R.id.vaccinesInfo) {
+                            fragmentTransaction.replace(R.id.fragment_holder, vaccineInfoFragment, "vaccineInfo");
+                        }
+
                         fragmentTransaction.commit();
                         return true;
                     }
