@@ -16,7 +16,7 @@ public class OffsetCalculator {
             "PCV booster", "DTwP B1/DTaP B1", "IPV B1", "Hib B1", "Hep–A 2", "Booster of Typhoid", "Conjugate Vaccine",
             "DTwP B2/DTaP B2", "OPV 3", "Varicella 2", "MMR 3", "Tdap/Td", "HPV"}; //Array of vaccines, in chronological order
 
-    public static int[] weekList = {0, 0, 0, 6, 6, 6, 6, 6, 6, 10, 10, 10, 10, 10, 14, 14, 14, 14, 14, 26, 26, 36, 36,
+    public static int[] weekList = {1, 1, 1, 6, 6, 6, 6, 6, 6, 10, 10, 10, 10, 10, 14, 14, 14, 14, 14, 26, 26, 36, 36,
             52, 52, 60, 60, 60, 72, 72, 72, 72, 104, 104, 208, 208, 208, 208, 520, 520}; //Array for number of weeks each of the above vaccine is due
 
     private int DOByear, DOBweekOfYear;

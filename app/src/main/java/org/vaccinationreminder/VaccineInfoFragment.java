@@ -37,7 +37,7 @@ public class VaccineInfoFragment extends Fragment {
         ListView lv = v.findViewById(R.id.vaccineListView);
         List<String> weeks = new ArrayList<>();
 
-        weeks.add("0");
+        weeks.add("1");
 
         for (int i = 1; i < OffsetCalculator.weekList.length; i++) {
 
@@ -95,7 +95,7 @@ class vaccineListAdapter extends BaseAdapter {
 
         for (int i = 0; i < OffsetCalculator.weekList.length; i++) {
 
-            if (OffsetCalculator.weekList[i] == Integer.parseInt(weeks.get(position))){
+            if (OffsetCalculator.weekList[i] == Integer.parseInt(weeks.get(position))) {
 
                 vaccines.add(OffsetCalculator.vaccineList[i]);
 
@@ -105,24 +105,32 @@ class vaccineListAdapter extends BaseAdapter {
 
         for (int j = 0; j < vaccines.size(); j++) {
 
-            stringBuilder.append(vaccines.get(j)).append("\n");
+            if (j == vaccines.size() - 1) {
+
+                stringBuilder.append(vaccines.get(j)).append("");
+            } else {
+
+                stringBuilder.append(vaccines.get(j)).append(", ");
+            }
 
         }
 
-        TextView tv1 = convertView.findViewById(R.id.VaccineName);
-        TextView tv2 = convertView.findViewById(R.id.WeekNumber);
-        TextView tv3 = convertView.findViewById(R.id.index);
-        
-        tv1.setText(stringBuilder);
-        if (weeks.get(position).equals("0")) {
+        TextView vaccineNameTextView = convertView.findViewById(R.id.VaccineName);
+        TextView weeksNumberTextView = convertView.findViewById(R.id.WeekNumber);
+        TextView indexTextView = convertView.findViewById(R.id.index);
 
-            tv2.setText("Birth");
+        vaccineNameTextView.setText(stringBuilder);
+
+        if (weeks.get(position).equals("1")) {
+
+            weeksNumberTextView.setText("Birth");
 
         } else {
 
-            tv2.setText(weeks.get(position) + " Weeks");
+            weeksNumberTextView.setText(weeks.get(position) + " Weeks");
         }
-        tv3.setText(Integer.toString(position + 1));
+
+        indexTextView.setText(Integer.toString(position + 1));
 
         return convertView;
     }

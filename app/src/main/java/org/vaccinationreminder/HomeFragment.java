@@ -2,15 +2,10 @@ package org.vaccinationreminder;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -33,7 +28,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
 
@@ -41,6 +35,7 @@ public class HomeFragment extends Fragment {
     List<String> childrenList, DOBList;
     String[] arr;
     databaseHandler helper;
+    alarmManagerClass alarm;
 
     @Nullable
     @Override
@@ -55,6 +50,25 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final childListAdapter adap;
+
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.READ_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CALENDAR)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_CALENDAR,
+                        Manifest.permission.WRITE_CALENDAR}, 1);
+            }
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_CALENDAR}, 1);
+        }
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_CALENDAR}, 1);
+
+        }
 
         final ListView lv = v.findViewById(R.id.childListView);
         helper = new databaseHandler(getActivity());
@@ -79,6 +93,8 @@ public class HomeFragment extends Fragment {
         lv.setAdapter(adap);
         lv.setLongClickable(true);
 
+        alarm = new alarmManagerClass();
+
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -89,8 +105,8 @@ public class HomeFragment extends Fragment {
 
                 helper.delete(deletedName);
                 adap.notifyDataSetChanged();
-
-                return false;
+                alarm.cancelAlarm(getActivity(), position);
+                return true;
             }
         });
 
@@ -147,6 +163,7 @@ class childListAdapter extends BaseAdapter {
     private Context c;
     private List<String> list, list2;
 
+    private alarmManagerClass alarm = new alarmManagerClass();
     childListAdapter(Context context, List<String> objects, List<String> objects2) {
 
         c = context;
@@ -179,10 +196,10 @@ class childListAdapter extends BaseAdapter {
         assert inflater != null;
         convertView = inflater.inflate(R.layout.home_fragment_listview_adapter, parent, false);
 
-        TextView tv = convertView.findViewById(R.id.childName);
-        TextView tv2 = convertView.findViewById(R.id.dobViewer);
-        TextView tv3 = convertView.findViewById(R.id.offsetViewer);
-        TextView tv4 = convertView.findViewById(R.id.nextVaccineList);
+        TextView childNameTextView = convertView.findViewById(R.id.childName);
+        TextView dobViewerTextView = convertView.findViewById(R.id.dobViewer);
+        TextView offsetViewerTextView = convertView.findViewById(R.id.offsetViewer);
+        TextView vaccineListTextView = convertView.findViewById(R.id.nextVaccineList);
 
         OffsetCalculator offsetCalculator = new OffsetCalculator();
 
@@ -190,80 +207,114 @@ class childListAdapter extends BaseAdapter {
 
         StringBuilder vaccineList = new StringBuilder();
 
-        for (String s : offsetCalculator.nextVaccines) {
-            vaccineList.append(s).append("\n");
+        for (int j = 0; j < offsetCalculator.nextVaccines.size(); j++) {
+
+            if (j == offsetCalculator.nextVaccines.size() - 1) {
+
+                vaccineList.append(offsetCalculator.nextVaccines.get(j)).append("");
+            } else {
+
+                vaccineList.append(offsetCalculator.nextVaccines.get(j)).append("\n");
+            }
+
         }
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
 
-        setSilentReminder(offsetMilliSeconds, "Get Vaccinations " + vaccineList);
+        //setSilentReminder(offsetMilliSeconds, "Get Vaccinations " + vaccineList);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-        tv.setText(list.get(position));
-        tv2.setText(list2.get(position));
-        tv3.setText(formatter.format(calendar.getTime()));
-        tv4.setText(vaccineList);
+        childNameTextView.setText(list.get(position));
+        dobViewerTextView.setText(list2.get(position));
+        offsetViewerTextView.setText(formatter.format(calendar.getTime()));
+        vaccineListTextView.setText(vaccineList);
+
+        alarm.setAlarm(calendar.getTimeInMillis(), "Get Vaccinations " + vaccineList, c, position+1);
 
         return convertView;
     }
 
-    private void setSilentReminder(long startTime, String title) {
-
-        ContentResolver cr = c.getContentResolver();
-        ContentValues values = new ContentValues();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(startTime);
-
-        String dtStart = formatter.format(calendar.getTime());
-
-        values.put(CalendarContract.Events.DTSTART, dtStart);
-        values.put(CalendarContract.Events.TITLE, title);
-        values.put(CalendarContract.Events.DESCRIPTION, "");
-
-        TimeZone timeZone = TimeZone.getDefault();
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
-
-// Default calendar
-        values.put(CalendarContract.Events.CALENDAR_ID, 1);
-// Set Period for 1 Hour
-        values.put(CalendarContract.Events.DURATION, "+P24H");
-
-        values.put(CalendarContract.Events.HAS_ALARM, 1);
-
-// Insert event to calendar
-        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.checkSelfPermission(c, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED){
-
-                ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.READ_CALENDAR,
-                        Manifest.permission.WRITE_CALENDAR}, 1);
-            }
-
-            ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.READ_CALENDAR}, 1);
-        }
-
-        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_CALENDAR}, 1);
-
-        }
-
-
-        Cursor cursor =
-                CalendarContract.Instances.query(c.getContentResolver(), null, startTime, startTime + (24 * 60 * 60 * 1000), title);
-        if (cursor.getCount() > 0) {
-            Toast.makeText(c, "Event already exists", Toast.LENGTH_SHORT).show();
-        } else {
-
-            cr.insert(CalendarContract.Events.CONTENT_URI, values);
-        }
-
-    }
+//    private void setSilentReminder(long startTime, String title) {
+//
+//        ContentResolver cr = c.getContentResolver();
+//        ContentValues values = new ContentValues();
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(startTime);
+//
+//        String dtStart = formatter.format(calendar.getTime());
+//
+//        values.put(CalendarContract.Events.DTSTART, dtStart);
+//        calendar.add(Calendar.DATE, 1);
+//        String dtEnd = formatter.format(calendar.getTime());
+//        values.put(CalendarContract.Events.DTEND, dtEnd);
+//        values.put(CalendarContract.Events.TITLE, title);
+//        values.put(CalendarContract.Events.DESCRIPTION, "");
+//
+//        TimeZone timeZone = TimeZone.getDefault();
+//        values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+//
+//// Default calendar
+//        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+//// Set Period for 1 Hour
+//        values.put(CalendarContract.Events.ALL_DAY, true);
+//
+//        values.put(CalendarContract.Events.HAS_ALARM, true);
+//
+//        values.put(CalendarContract.Events.EVENT_TIMEZONE,TimeZone.getDefault().getID());
+//        Log.i("Timezone", "Timezone retrieved=>"+TimeZone.getDefault().getID());
+//
+//// Insert event to calendar
+//        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//
+//            if (ActivityCompat.checkSelfPermission(c, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//
+//                ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.READ_CALENDAR,
+//                        Manifest.permission.WRITE_CALENDAR}, 1);
+//            }
+//
+//            ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.READ_CALENDAR}, 1);
+//        }
+//
+//        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//
+//            ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_CALENDAR}, 1);
+//
+//        }
+//
+//
+//        Cursor cursor =
+//                CalendarContract.Instances.query(c.getContentResolver(), null, startTime, startTime + (24 * 60 * 60 * 1000), title);
+//        if (cursor.getCount() > 0) {
+//            Toast.makeText(c, "Event already exists", Toast.LENGTH_SHORT).show();
+//        } else {
+//
+//            try {
+//
+//                Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+//                Log.i("insertion", "Uri returned=>"+ Objects.requireNonNull(uri).toString());
+//                // get the event ID that is the last element in the Uri
+//                long eventID = Long.parseLong(uri.getLastPathSegment());
+//
+//                ContentValues reminders = new ContentValues();
+//                reminders.put(CalendarContract.Reminders.EVENT_ID, eventID);
+//                reminders.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+//                reminders.put(CalendarContract.Reminders.MINUTES, 10);
+//
+//                Uri uri2 = cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders);
+//
+//            } catch (Exception e) {
+//
+//                e.printStackTrace();
+//
+//            }
+//        }
+//
+//    }
 }
 
 
