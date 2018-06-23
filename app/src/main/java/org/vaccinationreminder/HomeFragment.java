@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), childrenList.get(position) + " deleted", Toast.LENGTH_SHORT).show();
 
                 helper.delete(deletedName);
+                adap.childrenList.remove(position);
                 adap.notifyDataSetChanged();
                 alarm.cancelAlarm(getActivity(), position);
                 return true;
@@ -161,25 +162,26 @@ public class HomeFragment extends Fragment {
 class childListAdapter extends BaseAdapter {
 
     private Context c;
-    private List<String> list, list2;
+    public List<String> childrenList, DOBList;
 
     private alarmManagerClass alarm = new alarmManagerClass();
+
     childListAdapter(Context context, List<String> objects, List<String> objects2) {
 
         c = context;
-        list = objects;
-        list2 = objects2;
+        childrenList = objects;
+        DOBList = objects2;
 
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return childrenList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return childrenList.get(position);
     }
 
     @Override
@@ -203,7 +205,7 @@ class childListAdapter extends BaseAdapter {
 
         OffsetCalculator offsetCalculator = new OffsetCalculator();
 
-        long offsetMilliSeconds = offsetCalculator.getNextDate(list2.get(position));
+        long offsetMilliSeconds = offsetCalculator.getNextDate(DOBList.get(position));
 
         StringBuilder vaccineList = new StringBuilder();
 
@@ -226,14 +228,18 @@ class childListAdapter extends BaseAdapter {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-        childNameTextView.setText(list.get(position));
-        dobViewerTextView.setText(list2.get(position));
+        childNameTextView.setText(childrenList.get(position));
+        dobViewerTextView.setText(DOBList.get(position));
         offsetViewerTextView.setText(formatter.format(calendar.getTime()));
         vaccineListTextView.setText(vaccineList);
 
-        alarm.setAlarm(calendar.getTimeInMillis(), "Get Vaccinations " + vaccineList, c, position+1);
+        if (childrenList.get(0) != null) {
 
-        return convertView;
+            alarm.setAlarm(calendar.getTimeInMillis(), "Get Vaccinations " + vaccineList, c, position);
+
+        }
+
+            return convertView;
     }
 
 //    private void setSilentReminder(long startTime, String title) {
