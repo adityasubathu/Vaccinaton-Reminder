@@ -2,6 +2,7 @@ package org.vaccinationreminder;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -32,10 +33,11 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
     View v;
-    List<String> childrenList, DOBList;
-    String[] arr;
+    List<String> childrenList;
+    static List<String> DOBList;
     databaseHandler helper;
     alarmManagerClass alarm;
+    ListCreator listCreator = new ListCreator();
 
     @Nullable
     @Override
@@ -71,22 +73,11 @@ public class HomeFragment extends Fragment {
         }
 
         final ListView lv = v.findViewById(R.id.childListView);
+
         helper = new databaseHandler(getActivity());
-        childrenList = new ArrayList<>();
-        DOBList = new ArrayList<>();
 
-        String data = helper.getData();
-
-        arr = data.split(" {2}");
-
-        for (int i = 0; i < arr.length; i++) {
-
-            if (isInteger(arr[i])) {
-                childrenList.add(arr[i + 1]);
-                DOBList.add(arr[i + 2]);
-            }
-
-        }
+        childrenList = listCreator.getChildrenList(getActivity());
+        DOBList = listCreator.getDOBList(getActivity());
 
         adap = new childListAdapter(Objects.requireNonNull(getActivity()), childrenList, DOBList);
 
@@ -111,30 +102,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-    }
-
-    public static boolean isInteger(String str) {
-        if (str == null) {
-            return false;
-        }
-        int length = str.length();
-        if (length == 0) {
-            return false;
-        }
-        int i = 0;
-        if (str.charAt(0) == '-') {
-            if (length == 1) {
-                return false;
-            }
-            i = 1;
-        }
-        for (; i < length; i++) {
-            char c = str.charAt(i);
-            if (c < '0' || c > '9') {
-                return false;
-            }
-        }
-        return true;
     }
 
     @Override
@@ -162,7 +129,9 @@ public class HomeFragment extends Fragment {
 class childListAdapter extends BaseAdapter {
 
     private Context c;
-    public List<String> childrenList, DOBList;
+    List<String> childrenList;
+    private List<String> DOBList;
+    private ListCreator listCreator = new ListCreator();
 
     private alarmManagerClass alarm = new alarmManagerClass();
 
@@ -204,24 +173,12 @@ class childListAdapter extends BaseAdapter {
         TextView vaccineListTextView = convertView.findViewById(R.id.nextVaccineList);
 
         OffsetCalculator offsetCalculator = new OffsetCalculator();
-
         long offsetMilliSeconds = offsetCalculator.getNextDate(DOBList.get(position));
 
-        StringBuilder vaccineList = new StringBuilder();
-
-        for (int j = 0; j < offsetCalculator.nextVaccines.size(); j++) {
-
-            if (j == offsetCalculator.nextVaccines.size() - 1) {
-
-                vaccineList.append(offsetCalculator.nextVaccines.get(j)).append("");
-            } else {
-
-                vaccineList.append(offsetCalculator.nextVaccines.get(j)).append("\n");
-            }
-
-        }
+        String vaccineList = listCreator.getVaccineList(c, position);
 
         Calendar calendar = Calendar.getInstance();
+
         calendar.setTimeInMillis(offsetMilliSeconds);
 
         //setSilentReminder(offsetMilliSeconds, "Get Vaccinations " + vaccineList);
@@ -230,16 +187,32 @@ class childListAdapter extends BaseAdapter {
 
         childNameTextView.setText(childrenList.get(position));
         dobViewerTextView.setText(DOBList.get(position));
-        offsetViewerTextView.setText(formatter.format(calendar.getTime()));
-        vaccineListTextView.setText(vaccineList);
 
-        if (childrenList.get(0) != null) {
 
-            alarm.setAlarm(calendar.getTimeInMillis(), "Get Vaccinations " + vaccineList, c, position);
+        if (offsetMilliSeconds == 0) {
+
+            vaccineListTextView.setText("Vaccination Complete");
+            offsetViewerTextView.setText("No Next Vaccination Date");
+
+        } else {
+
+            offsetViewerTextView.setText(formatter.format(calendar.getTime()));
+            vaccineListTextView.setText(vaccineList);
+        }
+
+        boolean alarmUp = (PendingIntent.getBroadcast(c, position, new Intent(c, AlarmReceiver.class), PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (alarmUp) {
+
+            alarm.setAlarm(calendar.getTimeInMillis(), "Get Vaccinations:\n" + vaccineList, c, position);
+            Log.e("alarm", "setAlarm called");
+        } else {
+
+            Log.e("alarm", "alarm exists");
 
         }
 
-            return convertView;
+        return convertView;
     }
 
 //    private void setSilentReminder(long startTime, String title) {

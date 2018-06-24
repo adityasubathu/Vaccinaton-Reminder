@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,11 +131,11 @@ public class AddNewChildFragment extends Fragment {
 
                     if (id <= 0) {
 
-                        Message.message(getActivity(), "Insertion Unsuccessful");
+                        Log.e("database", "insertion unsuccessful");
 
                     } else {
 
-                        Message.message(getActivity(), "Insertion Successful");
+                        Log.e("database", "insertion successfull");
 
                         FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();

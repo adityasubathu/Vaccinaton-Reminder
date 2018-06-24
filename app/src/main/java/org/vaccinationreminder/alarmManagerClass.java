@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class alarmManagerClass {
+
+    public static List<String> alarmTitleList = new ArrayList<>();
 
 
     public void setAlarm(long time, String title, Context context, int requestCode) {
@@ -22,21 +26,15 @@ public class alarmManagerClass {
 
         calendar.setTimeInMillis(time);
 
+        // TODO: 24/6/18 recreate alarmTitleList on each startup
+
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        boolean alarmUp = (PendingIntent.getBroadcast(context, 0, new Intent(context, AlarmReceiver.class),
-                PendingIntent.FLAG_NO_CREATE) != null);
+        if (alarmManager != null) {
 
-        if (alarmManager != null && alarmUp) {
-
-            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-            Toast.makeText(context, "An Alarm Has Been Set", android.widget.Toast.LENGTH_SHORT).show();
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             Log.e("alarm", "alarm set");
-
-        } else if (!alarmUp) {
-
-            Log.e("alarm", "alarm already exists");
         } else {
 
             Log.e("alarm", "alarmManager.set is null");
@@ -56,7 +54,6 @@ public class alarmManagerClass {
         if (alarmManager != null) {
 
             alarmManager.cancel(pendingIntent);
-
             Toast.makeText(context, "An Alarm Has Been Cancelled", android.widget.Toast.LENGTH_SHORT).show();
         } else {
 

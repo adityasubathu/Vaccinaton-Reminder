@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import java.util.Objects;
 
-public class MainFragmentHolder extends AppCompatActivity {
+public class MainFragmentHolder extends AppCompatActivity{
 
     DrawerLayout HomeActivityNavDrawer;
 
@@ -38,6 +38,7 @@ public class MainFragmentHolder extends AppCompatActivity {
         final HomeFragment homeFragment = new HomeFragment();
         final AddNewChildFragment childManagerFragment = new AddNewChildFragment();
         final VaccineInfoFragment vaccineInfoFragment = new VaccineInfoFragment();
+        final alarmManagerFragment alarmManagerFragment = new alarmManagerFragment();
 
         fragmentTransaction.add(R.id.fragment_holder, homeFragment, "home");
         fragmentTransaction.commit();
@@ -65,8 +66,12 @@ public class MainFragmentHolder extends AppCompatActivity {
                             fragmentTransaction.replace(R.id.fragment_holder, childManagerFragment, "childManager");
                         }
 
-                        if (menuItem.getItemId() == R.id.vaccinesInfo) {
+                        if (menuItem.getItemId() == R.id.vaccines_info) {
                             fragmentTransaction.replace(R.id.fragment_holder, vaccineInfoFragment, "vaccineInfo");
+                        }
+
+                        if (menuItem.getItemId() == R.id.alarm_manager) {
+                            fragmentTransaction.replace(R.id.fragment_holder, alarmManagerFragment, "alarmManager");
                         }
 
                         fragmentTransaction.commit();
@@ -85,5 +90,4 @@ public class MainFragmentHolder extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

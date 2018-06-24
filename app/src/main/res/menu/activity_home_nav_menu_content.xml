@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <!--TODO: use <item> tags for adding new options in the nav menu-->
 
         <!--Example-->
 
@@ -14,11 +13,15 @@
             android:id="@+id/child_manager"
             android:icon="@drawable/child"
             android:title="@string/add_children" />
+        <item
+            android:id="@+id/alarm_manager"
+            android:icon="@drawable/ic_alarm"
+            android:title="@string/alarm_manager"/>
 
         <item
-            android:id="@+id/vaccinesInfo"
-            android:title="Vaccines Info"
-            android:icon="@drawable/ic_info"/>
+            android:id="@+id/vaccines_info"
+            android:icon="@drawable/ic_info"
+            android:title="@string/vaccines_info" />
 
 
     </group>

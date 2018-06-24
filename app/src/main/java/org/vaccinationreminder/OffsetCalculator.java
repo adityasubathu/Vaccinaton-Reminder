@@ -22,7 +22,7 @@ public class OffsetCalculator {
     private int DOByear, DOBweekOfYear;
     private static int offset = 0, currentOffset;
 
-    public List<String> nextVaccines;
+    public static List<String> nextVaccines;
 
     long getNextDate(String dateOfBirth) {
 
@@ -93,6 +93,13 @@ public class OffsetCalculator {
             ++newYear;
             DOBCal.set(Calendar.YEAR, newYear);
 
+        }
+
+        DOBCal.add(Calendar.HOUR, 8);
+
+        if (offset == 0) {
+
+            return 0;
         }
 
 
