@@ -1,5 +1,7 @@
 package org.vaccinationreminder;
 
+import android.content.Context;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,64 +12,23 @@ import java.util.Locale;
 
 public class OffsetCalculator {
 
-    public static String[] vaccineList = {"BCG", "OPV 0", "Hep–B 1", "DTwP 1", "IPV 1", "Hep–B 2", "Hib 1", "Rotavirus 1",
-            "PCV 1", "DTwP 2", "IPV 2", "Hib 2", "Rotavirus 2", "PCV 2", "DTwP 3", "IPV 3", "Hib 3", "Rotavirus 3",
-            "PCV 3", "OPV 1", "Hep–B 3", "OPV 2", "MMR 1", "TCV", "Hep–A 1", "MMR 2", "Varicella 1",
-            "PCV booster", "DTwP B1/DTaP B1", "IPV B1", "Hib B1", "Hep–A 2", "Booster of Typhoid", "Conjugate Vaccine",
-            "DTwP B2/DTaP B2", "OPV 3", "Varicella 2", "MMR 3", "Tdap/Td", "HPV"}; //Array of vaccines, in chronological order
+    public String[] vaccineList = {"BCG", "OPV 0", "Hep–B 1", "DTwP 1", "IPV 1", "Hep–B 2", "Hib 1", "Rotavirus 1", "PCV 1", "DTwP 2", "IPV 2", "Hib 2", "Rotavirus 2", "PCV 2", "DTwP 3", "IPV 3", "Hib 3", "Rotavirus 3", "PCV 3", "OPV 1", "Hep–B 3", "OPV 2", "MMR 1", "TCV", "Hep–A 1", "MMR 2", "Varicella 1", "PCV booster", "DTwP B1/DTaP B1", "IPV B1", "Hib B1", "Hep–A 2", "Booster of Typhoid", "Conjugate Vaccine", "DTwP B2/DTaP B2", "OPV 3", "Varicella 2", "MMR 3", "Tdap/Td", "HPV"}; //Array of vaccines, in chronological order
 
-    public static int[] weekList = {1, 1, 1, 6, 6, 6, 6, 6, 6, 10, 10, 10, 10, 10, 14, 14, 14, 14, 14, 26, 26, 36, 36,
-            52, 52, 60, 60, 60, 72, 72, 72, 72, 104, 104, 208, 208, 208, 208, 520, 520}; //Array for number of weeks each of the above vaccine is due
+    public int[] weekList = {1, 1, 1, 6, 6, 6, 6, 6, 6, 10, 10, 10, 10, 10, 14, 14, 14, 14, 14, 26, 26, 36, 36, 52, 52, 60, 60, 60, 72, 72, 72, 72, 104, 104, 208, 208, 208, 208, 520, 520}; //Array for number of weeks each of the above vaccine is due
 
-    private int DOByear, DOBweekOfYear;
-    private static int offset = 0, currentOffset;
+    private List<String> nextVaccines = new ArrayList<>();
 
-    public static List<String> nextVaccines;
+    private int offset;
 
-    long getNextDate(String dateOfBirth) {
+    public String getVaccineList(Context context, int position, String appendString){
 
-        nextVaccines = new ArrayList<>();
+        ListCreator listCreator = new ListCreator();
 
-        Calendar DOBCal = Calendar.getInstance();
-        Calendar currentDateCal = Calendar.getInstance();
+        List<String> DOBList = listCreator.getDOBList(context);
 
-        currentDateCal.setTimeInMillis(System.currentTimeMillis());
-        int currentWeekOfYear = currentDateCal.get(Calendar.WEEK_OF_YEAR);
-        int currentYear = currentDateCal.get(Calendar.YEAR);
+        String DOB = DOBList.get(position);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        try {
-            Date mDate = sdf.parse(dateOfBirth);
-
-            DOBCal.setTime(mDate);
-            DOBweekOfYear = DOBCal.get(Calendar.WEEK_OF_YEAR);
-            DOByear = DOBCal.get(Calendar.YEAR);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (currentYear > DOByear) {
-
-            int yearDIff = currentYear - DOByear;
-
-            currentOffset = ((52 * yearDIff) - DOBweekOfYear) + currentWeekOfYear;
-
-        } else if (currentYear == DOByear) {
-
-            currentOffset = currentWeekOfYear - DOBweekOfYear;
-
-        }
-
-        for (int aWeekList : weekList) {
-
-            if (aWeekList > currentOffset) {
-
-                offset = aWeekList;
-                break;
-
-            }
-        }
+        dateDiffNextDate(DOB);
 
         for (int i = 0; i < weekList.length; i++) {
 
@@ -79,31 +40,77 @@ public class OffsetCalculator {
 
         }
 
-        int newWeek = DOBweekOfYear + offset;
+        StringBuilder vaccineListStringBuilder = new StringBuilder();
 
-        int nextYear = newWeek/52;
+        for (int j = 0; j < nextVaccines.size(); j++) {
 
-        int nextWeek = (newWeek - (52 * nextYear));
+            if (j == nextVaccines.size() - 1) {
 
-        DOBCal.set(Calendar.WEEK_OF_YEAR, nextWeek);
+                vaccineListStringBuilder.append(nextVaccines.get(j)).append("");
+            } else {
 
-        if (nextYear > 0) {
-
-            int newYear = DOBCal.get(Calendar.YEAR);
-            ++newYear;
-            DOBCal.set(Calendar.YEAR, newYear);
+                vaccineListStringBuilder.append(nextVaccines.get(j)).append(appendString);
+            }
 
         }
 
-        DOBCal.add(Calendar.HOUR, 8);
+        return vaccineListStringBuilder.toString();
+    }
 
-        if (offset == 0) {
+    long dateDiffNextDate(String dateOfBirth) {
 
-            return 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        Calendar timeNow = Calendar.getInstance();
+
+        timeNow.setTimeInMillis(System.currentTimeMillis());
+
+        Calendar DOBCalendar = Calendar.getInstance();
+
+        Date DOB = null;
+
+        try {
+            DOB = sdf.parse(dateOfBirth);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
+        if (DOB != null) {
 
-        return (DOBCal.getTimeInMillis());
+            DOBCalendar.setTime(DOB);
+
+        }
+
+        long dobInMillis = DOBCalendar.getTimeInMillis();
+
+        long elapsedTimeSinceBirthInMillis = System.currentTimeMillis() - dobInMillis;
+
+        int elapsedTimeSinceBirthInWeeks = (int) (elapsedTimeSinceBirthInMillis / 1000 / 60 / 60 / 24 / 7);
+
+        if (elapsedTimeSinceBirthInWeeks > 520) {
+
+            return 1;
+
+        }
+
+        for (int weeksInterval : weekList) {
+
+            if (weeksInterval > elapsedTimeSinceBirthInWeeks) {
+
+                offset = weeksInterval;
+                break;
+
+            }
+
+        }
+
+        int differenceInWeeks = offset - elapsedTimeSinceBirthInWeeks;
+
+        Calendar nextVaccineDateCalendar = Calendar.getInstance();
+        nextVaccineDateCalendar.setTimeInMillis(System.currentTimeMillis());
+        nextVaccineDateCalendar.add(Calendar.WEEK_OF_YEAR, differenceInWeeks);
+
+        return nextVaccineDateCalendar.getTimeInMillis();
 
     }
 

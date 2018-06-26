@@ -39,11 +39,13 @@ public class VaccineInfoFragment extends Fragment {
 
         weeks.add("1");
 
-        for (int i = 1; i < OffsetCalculator.weekList.length; i++) {
+        OffsetCalculator offsetCalculator = new OffsetCalculator();
 
-            if (OffsetCalculator.weekList[i] > OffsetCalculator.weekList[i - 1]) {
+        for (int i = 1; i < offsetCalculator.weekList.length; i++) {
 
-                weeks.add(Integer.toString(OffsetCalculator.weekList[i + 1]));
+            if (offsetCalculator.weekList[i] > offsetCalculator.weekList[i - 1]) {
+
+                weeks.add(Integer.toString(offsetCalculator.weekList[i + 1]));
 
             }
         }
@@ -93,11 +95,13 @@ class vaccineListAdapter extends BaseAdapter {
         List<String> vaccines = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (int i = 0; i < OffsetCalculator.weekList.length; i++) {
+        OffsetCalculator offsetCalculator = new OffsetCalculator();
 
-            if (OffsetCalculator.weekList[i] == Integer.parseInt(weeks.get(position))) {
+        for (int i = 0; i < offsetCalculator.weekList.length; i++) {
 
-                vaccines.add(OffsetCalculator.vaccineList[i]);
+            if (offsetCalculator.weekList[i] == Integer.parseInt(weeks.get(position))) {
+
+                vaccines.add(offsetCalculator.vaccineList[i]);
 
             }
 

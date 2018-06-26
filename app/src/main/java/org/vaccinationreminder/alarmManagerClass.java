@@ -13,10 +13,7 @@ import java.util.List;
 
 public class alarmManagerClass {
 
-    public static List<String> alarmTitleList = new ArrayList<>();
-
-
-    public void setAlarm(long time, String title, Context context, int requestCode) {
+    public void setAlarm(long time, Context context, int requestCode) {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -54,7 +51,7 @@ public class alarmManagerClass {
         if (alarmManager != null) {
 
             alarmManager.cancel(pendingIntent);
-            Toast.makeText(context, "An Alarm Has Been Cancelled", android.widget.Toast.LENGTH_SHORT).show();
+            Log.e("alarm", "alarmManager has been cancelled");
         } else {
 
             Log.e("alarm", "alarmManager.cancel is null");

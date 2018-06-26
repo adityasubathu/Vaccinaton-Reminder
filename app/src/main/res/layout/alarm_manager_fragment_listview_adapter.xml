@@ -8,16 +8,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Trigger time"
         android:textSize="25sp" />
 
     <TextView
         android:id="@+id/alarmTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/triggerTimeDisplay"
+        android:layout_marginEnd="170dp"
         android:padding="8dp"
-        android:text="Title of the alarm"
         android:textAlignment="center"
         android:textSize="20sp" />
 
@@ -27,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/alarmTitle"
         android:padding="8dp"
-        android:text="Date of the alarm"
         android:textSize="18sp" />
 
     <TextView
@@ -37,7 +35,6 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/triggerTimeDisplay"
         android:padding="8dp"
-        android:text="Remaining time"
         android:textSize="18sp" />
 
     <TextView
@@ -47,7 +44,6 @@
         android:layout_alignBottom="@id/triggerTimeDisplay"
         android:layout_alignParentEnd="true"
         android:padding="8dp"
-        android:text="Name of child"
         android:textSize="18sp" />
 
 

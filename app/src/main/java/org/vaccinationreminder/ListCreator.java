@@ -3,6 +3,7 @@ package org.vaccinationreminder;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ListCreator {
@@ -24,28 +25,6 @@ public class ListCreator {
         }
 
         return DOBList;
-    }
-
-    public String getVaccineList(Context context, int position) {
-
-        OffsetCalculator calculator = new OffsetCalculator();
-        StringBuilder vaccineListStringBuilder = new StringBuilder();
-
-        calculator.getNextDate(getDOBList(context).get(position));
-
-        for (int j = 0; j < OffsetCalculator.nextVaccines.size(); j++) {
-
-            if (j == OffsetCalculator.nextVaccines.size() - 1) {
-
-                vaccineListStringBuilder.append(OffsetCalculator.nextVaccines.get(j)).append("");
-            } else {
-
-                vaccineListStringBuilder.append(OffsetCalculator.nextVaccines.get(j)).append("\n");
-            }
-
-        }
-        return vaccineListStringBuilder.toString();
-
     }
 
     public List<String> getChildrenList(Context context) {
