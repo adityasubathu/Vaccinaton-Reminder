@@ -12,23 +12,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".MainFragmentHolder"
-
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
         <activity
             android:name=".SplashActivity"
-
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +35,8 @@
             android:name=".AlarmReceiver"
             android:enabled="true"
             android:process=":remote" />
+
+        <activity android:name=".AlarmAlertWindow"></activity>
     </application>
 
 </manifest>

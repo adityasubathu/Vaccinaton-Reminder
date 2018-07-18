@@ -150,13 +150,13 @@ class childListAdapter extends BaseAdapter {
         TextView vaccineListTextView = convertView.findViewById(R.id.nextVaccineList);
 
         OffsetCalculator offsetCalculator = new OffsetCalculator();
-        long offsetMilliSeconds = offsetCalculator.dateDiffNextDate(DOBList.get(position));
+        long nextDateMilliseconds = offsetCalculator.dateDiffNextDate(DOBList.get(position));
 
         String vaccineList = offsetCalculator.getVaccineList(c, position, "\n");
 
         Calendar calendar = Calendar.getInstance();
 
-        calendar.setTimeInMillis(offsetMilliSeconds);
+        calendar.setTimeInMillis(nextDateMilliseconds);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
@@ -164,12 +164,7 @@ class childListAdapter extends BaseAdapter {
         dobViewerTextView.setText(DOBList.get(position));
 
 
-        if (offsetMilliSeconds == 1) {
-
-            vaccineListTextView.setText("Vaccination Complete");
-            offsetViewerTextView.setText("No Next Vaccination Date");
-
-        } else {
+        if (nextDateMilliseconds != 1) {
 
             offsetViewerTextView.setText(formatter.format(calendar.getTime()));
             vaccineListTextView.setText(vaccineList);
@@ -180,16 +175,19 @@ class childListAdapter extends BaseAdapter {
             if (alarmUp) {
 
                 alarm.setAlarm(calendar.getTimeInMillis(), c, position);
-                Log.e("alarm", "setAlarm called");
+                Log.d("alarm", "setAlarm called");
             } else {
 
-                Log.e("alarm", "alarm exists");
+                Log.d("alarm", "alarm exists");
 
             }
+        } else {
+
+            offsetViewerTextView.setText("");
+            vaccineListTextView.setText(R.string.vacc_complete);
+
         }
 
         return convertView;
     }
 }
-
-

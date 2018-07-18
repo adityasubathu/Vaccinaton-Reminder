@@ -24,4 +24,5 @@
     <string name="sampleText">Sample Text</string>
     <string name="vaccines_info">Vaccines Info</string>
     <string name="alarm_manager">Alarm Manager</string>
+    <string name="vacc_complete">Vaccination Complete</string>
 </resources>

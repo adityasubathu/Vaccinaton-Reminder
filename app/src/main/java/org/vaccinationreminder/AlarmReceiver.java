@@ -8,7 +8,10 @@ import android.widget.Toast;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "An Alarm Has Been Set or Cancelled", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "An Alarm Has Been Triggered", Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(context, AlarmAlertWindow.class);
+        context.startActivity(i);
 
     }
 }
