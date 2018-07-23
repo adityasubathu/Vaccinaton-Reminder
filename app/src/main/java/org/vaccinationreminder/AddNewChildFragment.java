@@ -135,7 +135,7 @@ public class AddNewChildFragment extends Fragment {
 
                     } else {
 
-                        Log.e("database", "insertion successfull");
+                        Log.e("database", "insertion successful");
 
                         FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();

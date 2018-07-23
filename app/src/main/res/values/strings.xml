@@ -6,7 +6,7 @@
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="signup">Signup</string>
-    <string name="syringeimage">syringeImage</string>
+    <string name="syringeImage">syringeImage</string>
     <string name="full_name">Full Name</string>
     <string name="sign_up_alert">User Not Registered. Please Sign Up.</string>
     <string name="welcome">"Welcome, "</string>
@@ -19,8 +19,8 @@
     <string name="gender">Gender:</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="empty_child_name_toast">Please Enter your Child\'s Details Correctly</string>
-    <string name="headerimage">headerImage</string>
+    <string name="empty_child_name_toast">Please Enter Your Child\'s Details Correctly</string>
+    <string name="headerImage">headerImage</string>
     <string name="sampleText">Sample Text</string>
     <string name="vaccines_info">Vaccines Info</string>
     <string name="alarm_manager">Alarm Manager</string>

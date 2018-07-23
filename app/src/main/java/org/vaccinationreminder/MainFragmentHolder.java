@@ -24,7 +24,6 @@ public class MainFragmentHolder extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_holder);
 
-
         Toolbar toolbar = findViewById(R.id.activity_home_toolbar);
         setSupportActionBar(toolbar);
 
