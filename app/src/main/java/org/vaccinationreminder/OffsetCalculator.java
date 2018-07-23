@@ -113,7 +113,7 @@ public class OffsetCalculator {
         int differenceInWeeks = offset - elapsedTimeSinceBirthInWeeks;
 
         Calendar nextVaccineDateCalendar = Calendar.getInstance();
-        nextVaccineDateCalendar.setTimeInMillis(System.currentTimeMillis());
+        nextVaccineDateCalendar.setTime(DOB);
         nextVaccineDateCalendar.add(Calendar.WEEK_OF_YEAR, differenceInWeeks);
 
         return nextVaccineDateCalendar.getTimeInMillis();

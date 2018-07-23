@@ -102,6 +102,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         long offsetMilliSeconds = offsetCalculator.dateDiffNextDate(listCreator.getDOBList(context).get(position));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
+        calendar.add(Calendar.HOUR, 8);
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEE MMMM dd, yyyy", Locale.getDefault());
         SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a", Locale.getDefault());

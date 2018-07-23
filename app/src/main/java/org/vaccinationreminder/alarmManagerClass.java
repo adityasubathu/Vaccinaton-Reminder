@@ -22,8 +22,7 @@ public class alarmManagerClass {
         calendar.clear();
 
         calendar.setTimeInMillis(time);
-
-        // TODO: 24/6/18 recreate alarmTitleList on each startup
+        calendar.add(Calendar.HOUR, 8);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -31,10 +30,10 @@ public class alarmManagerClass {
         if (alarmManager != null) {
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            Log.e("alarm", "alarm set");
+            Log.d("alarm", "alarm set");
         } else {
 
-            Log.e("alarm", "alarmManager.set is null");
+            Log.d("alarm", "alarmManager.set is null");
 
         }
 
