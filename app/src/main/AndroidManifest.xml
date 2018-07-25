@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/VaccineReminderMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/VaccineReminderMaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,23 +22,26 @@
         </activity>
         <activity
             android:name=".MainFragmentHolder"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/VaccineReminderMaterialTheme" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/VaccineReminderMaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AlarmAlertWindow"
+            android:theme="@style/VaccineReminderMaterialTheme" />
 
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".AlarmAlertWindow"></activity>
+
     </application>
 
 </manifest>
