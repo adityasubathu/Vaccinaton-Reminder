@@ -1,50 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/triggerTimeDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/alarmTitle"
+    <android.support.v7.widget.CardView xmlns:cardView="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/triggerTimeDisplay"
-        android:layout_marginEnd="230dp"
-        android:padding="4dp"
-        android:textAlignment="center"
-        android:textSize="20sp" />
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:theme="@style/VaccineReminderMaterialTheme"
+        cardView:cardCornerRadius="4dp">
 
-    <TextView
-        android:id="@+id/alarmDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/alarmTitle"
-        android:padding="8dp"
-        android:textSize="18sp" />
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/remainingTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/triggerTimeDisplay"
-        android:padding="8dp"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/triggerTimeDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:padding="8dp"
+                android:text="triggerTimeDisplay"
+                android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/alarmChildName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/triggerTimeDisplay"
-        android:layout_alignParentEnd="true"
-        android:padding="8dp"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/alarmTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:padding="8dp"
+                android:text="alarmTitle"
+
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/alarmDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:padding="8dp"
+                android:text="alarmDate"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/remainingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="right"
+                android:layout_row="1"
+                android:padding="8dp"
+                android:text="remainingTime"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/alarmChildName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="right"
+                android:layout_row="0"
+                android:padding="8dp"
+                android:text="alarmChildName"
+                android:textSize="18sp" />
 
 
-</RelativeLayout>
+        </GridLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

@@ -30,11 +30,11 @@ public class alarmManagerClass {
         if (alarmManager != null) {
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
             Log.d("alarm", "alarm set");
+
         } else {
-
             Log.d("alarm", "alarmManager.set is null");
-
         }
 
     }
@@ -50,11 +50,11 @@ public class alarmManagerClass {
         if (alarmManager != null) {
 
             alarmManager.cancel(pendingIntent);
-            Log.e("alarm", "alarmManager has been cancelled");
+
+            Log.d("alarm", "alarmManager has been cancelled");
+
         } else {
-
-            Log.e("alarm", "alarmManager.cancel is null");
-
+            Log.d("alarm", "alarmManager.cancel is null");
         }
 
 

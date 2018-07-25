@@ -121,7 +121,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
             alarmTitleTextView.setText(alarmTitleList.get(position));
             alarmRemainingTimeTextView.setText(remainingTime);
             alarmDateTextView.setText(date);
-            alarmTriggerTimeTextView.setText(timeFormatter.format(calendar.getTime()));
+            alarmTriggerTimeTextView.setText(timeFormatter.format(calendar.getTime()).toUpperCase(Locale.getDefault()));
         }
 
         nameOfChildTextView.setText(listCreator.getChildrenList(context).get(position));
@@ -136,6 +136,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         long offsetMilliSeconds = offsetCalculator.dateDiffNextDate(listCreator.getDOBList(context).get(position));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
+        calendar.add(Calendar.HOUR, 8);
 
         Calendar currentTime = Calendar.getInstance();
         currentTime.setTimeInMillis(System.currentTimeMillis());
@@ -153,12 +154,22 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         millis = millis % hoursInMilli;
 
         long elapsedMinutes = millis / minutesInMilli;
-        millis = millis % minutesInMilli;
 
-        long elapsedSeconds = millis / secondsInMilli;
+        String days = String.format(Locale.getDefault(), "%s Days:", Long.toString(elapsedDays));
+        String hours = String.format(Locale.getDefault(), "%s Hours:", Long.toString(elapsedHours));
+        String minutes = String.format(Locale.getDefault(), "%s Minutes", Long.toString(elapsedMinutes));
 
-        return String.format(Locale.getDefault(), "%s Days:%s Hours:%s Minutes", Long.toString(elapsedDays), Long.toString(elapsedHours),
-                Long.toString(elapsedMinutes));
+        if (elapsedDays == 0) {
+            days="";
+        }
+        if (elapsedHours == 0) {
+            hours="";
+        }
+        if (elapsedMinutes == 0){
+            minutes="";
+        }
+
+        return String.format(Locale.getDefault(), "%s%s%s", days, hours, minutes);
 
     }
 

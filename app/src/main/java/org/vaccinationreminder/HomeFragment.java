@@ -170,12 +170,14 @@ class childListAdapter extends BaseAdapter {
             vaccineListTextView.setText(vaccineList);
 
 
-            boolean alarmUp = (PendingIntent.getBroadcast(c, position, new Intent(c, AlarmReceiver.class), PendingIntent.FLAG_NO_CREATE) != null);
+            boolean alarmNotUp = (PendingIntent.getBroadcast(c, position, new Intent(c, AlarmReceiver.class), PendingIntent.FLAG_NO_CREATE) != null);
 
-            if (alarmUp) {
+            if (alarmNotUp) {
 
-                alarm.setAlarm(calendar.getTimeInMillis(), c, position);
                 Log.d("alarm", "setAlarm called");
+                alarm.setAlarm(calendar.getTimeInMillis(), c, position);
+
+
             } else {
 
                 Log.d("alarm", "alarm exists");
