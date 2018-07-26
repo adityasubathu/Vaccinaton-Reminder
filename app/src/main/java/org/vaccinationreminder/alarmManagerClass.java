@@ -22,7 +22,7 @@ public class alarmManagerClass {
         calendar.clear();
 
         calendar.setTimeInMillis(time);
-        calendar.add(Calendar.HOUR, 8);
+        //calendar.add(Calendar.HOUR, 8);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
