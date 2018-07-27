@@ -225,7 +225,8 @@ class childListAdapter extends BaseExpandableListAdapter {
         vaccineName.setText(scheduleVaccinesList.get(childPosition));
 
         ListCreator creator = new ListCreator();
-        List<String> nextVaccinesDateList = creator.getFullVaccineDatesList(DOBList.get(groupPosition));
+        String DOB = DOBList.get(groupPosition);
+        List<String> nextVaccinesDateList = creator.getFullVaccineDatesList(DOB);
         date.setText(nextVaccinesDateList.get(childPosition));
 
         return convertView;

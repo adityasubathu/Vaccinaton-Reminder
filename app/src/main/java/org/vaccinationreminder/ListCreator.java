@@ -84,6 +84,7 @@ public class ListCreator {
 
             if (calculator.weekList[i - 1] == calculator.weekList[i]) {
 
+                tempList.clear();
                 tempList.add(calculator.vaccineList[i - 1]);
 
             } else {
@@ -93,7 +94,13 @@ public class ListCreator {
 
                 for (int j = 0; j < tempList.size(); j++) {
 
-                    s.append(tempList.get(j)).append(", ");
+                    if (j == tempList.size() - 1) {
+
+                        s.append(tempList.get(j)).append("");
+                    } else {
+
+                        s.append(tempList.get(j)).append(", ");
+                    }
 
                 }
 
@@ -115,12 +122,12 @@ public class ListCreator {
         List<String> fullVaccineDatesList = new ArrayList<>();
         List<Integer> temporaryList = new ArrayList<>();
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
         Date DOB = null;
 
         try {
-            DOB = format.parse(dateOfBirth);
+            DOB = formatter.parse(dateOfBirth);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,7 +161,10 @@ public class ListCreator {
             calendar.add(Calendar.YEAR, year);
             calendar.add(Calendar.WEEK_OF_YEAR, weeks);
 
-            fullVaccineDatesList.add(format.format(calendar.getTime()));
+            if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
+
+                fullVaccineDatesList.add(formatter.format(calendar.getTime()));
+            }
 
             calendar.setTime(DOB);
 
