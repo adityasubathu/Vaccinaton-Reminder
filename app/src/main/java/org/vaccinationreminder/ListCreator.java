@@ -1,7 +1,6 @@
 package org.vaccinationreminder;
 
 import android.content.Context;
-import android.content.Intent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +10,30 @@ import java.util.List;
 import java.util.Locale;
 
 public class ListCreator {
+
+    private static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public List<String> getDOBList(Context context) {
 
@@ -48,30 +71,6 @@ public class ListCreator {
         }
 
         return childrenList;
-    }
-
-    private static boolean isInteger(String str) {
-        if (str == null) {
-            return false;
-        }
-        int length = str.length();
-        if (length == 0) {
-            return false;
-        }
-        int i = 0;
-        if (str.charAt(0) == '-') {
-            if (length == 1) {
-                return false;
-            }
-            i = 1;
-        }
-        for (; i < length; i++) {
-            char c = str.charAt(i);
-            if (c < '0' || c > '9') {
-                return false;
-            }
-        }
-        return true;
     }
 
     public List<String> getFullVaccineList() {
@@ -136,9 +135,7 @@ public class ListCreator {
         calendar.setTime(DOB);
 
 
-
         for (int i = 1; i < calculator.weekList.length; i++) {
-
 
 
             if (calculator.weekList[i - 1] != calculator.weekList[i]) {
@@ -151,15 +148,15 @@ public class ListCreator {
 
         for (int i = 0; i < temporaryList.size(); i++) {
 
-                int year = temporaryList.get(i) / 52;
-                int weeks = temporaryList.get(i) - (52*year);
+            int year = temporaryList.get(i) / 52;
+            int weeks = temporaryList.get(i) - (52 * year);
 
-                calendar.add(Calendar.YEAR, year);
-                calendar.add(Calendar.WEEK_OF_YEAR, weeks);
+            calendar.add(Calendar.YEAR, year);
+            calendar.add(Calendar.WEEK_OF_YEAR, weeks);
 
-                fullVaccineDatesList.add(format.format(calendar.getTime()));
+            fullVaccineDatesList.add(format.format(calendar.getTime()));
 
-                calendar.setTime(DOB);
+            calendar.setTime(DOB);
 
         }
 

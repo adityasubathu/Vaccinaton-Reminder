@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import java.util.Objects;
 
-public class MainFragmentHolder extends AppCompatActivity{
+public class MainFragmentHolder extends AppCompatActivity {
 
     DrawerLayout HomeActivityNavDrawer;
 
@@ -46,37 +46,36 @@ public class MainFragmentHolder extends AppCompatActivity{
         NavigationView HomeActivityNavView = findViewById(R.id.activity_home_nav_menu);
         HomeActivityNavView.setCheckedItem(R.id.home_fragment);
 
-        HomeActivityNavView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        HomeActivityNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                        menuItem.setChecked(true);
-                        HomeActivityNavDrawer.closeDrawers();
+                menuItem.setChecked(true);
+                HomeActivityNavDrawer.closeDrawers();
 
-                        if (menuItem.getItemId() == R.id.home_fragment) {
-                            fragmentTransaction.replace(R.id.fragment_holder, homeFragment, "home");
-                        }
+                if (menuItem.getItemId() == R.id.home_fragment) {
+                    fragmentTransaction.replace(R.id.fragment_holder, homeFragment, "home");
+                }
 
-                        if (menuItem.getItemId() == R.id.child_manager) {
-                            fragmentTransaction.replace(R.id.fragment_holder, childManagerFragment, "childManager");
-                        }
+                if (menuItem.getItemId() == R.id.child_manager) {
+                    fragmentTransaction.replace(R.id.fragment_holder, childManagerFragment, "childManager");
+                }
 
-                        if (menuItem.getItemId() == R.id.vaccines_info) {
-                            fragmentTransaction.replace(R.id.fragment_holder, vaccineInfoFragment, "vaccineInfo");
-                        }
+                if (menuItem.getItemId() == R.id.vaccines_info) {
+                    fragmentTransaction.replace(R.id.fragment_holder, vaccineInfoFragment, "vaccineInfo");
+                }
 
-                        if (menuItem.getItemId() == R.id.alarm_manager) {
-                            fragmentTransaction.replace(R.id.fragment_holder, alarmManagerFragment, "alarmManager");
-                        }
+                if (menuItem.getItemId() == R.id.alarm_manager) {
+                    fragmentTransaction.replace(R.id.fragment_holder, alarmManagerFragment, "alarmManager");
+                }
 
-                        fragmentTransaction.commit();
-                        return true;
-                    }
-                });
+                fragmentTransaction.commit();
+                return true;
+            }
+        });
 
     }
 

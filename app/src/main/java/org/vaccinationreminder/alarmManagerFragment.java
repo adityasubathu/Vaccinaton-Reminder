@@ -42,7 +42,7 @@ public class alarmManagerFragment extends Fragment {
         ListCreator listCreator = new ListCreator();
         OffsetCalculator offsetCalculator = new OffsetCalculator();
 
-        for (int i = 0; i < listCreator.getChildrenList(getActivity()).size(); i++){
+        for (int i = 0; i < listCreator.getChildrenList(getActivity()).size(); i++) {
 
             alarmTitleList.add(offsetCalculator.getVaccineList(getActivity(), i, ", "));
 
@@ -129,7 +129,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private String getRemainingTime(int position){
+    private String getRemainingTime(int position) {
 
         OffsetCalculator offsetCalculator = new OffsetCalculator();
 
@@ -160,13 +160,13 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         String minutes = String.format(Locale.getDefault(), "%s Minutes", Long.toString(elapsedMinutes));
 
         if (elapsedDays == 0) {
-            days="";
+            days = "";
         }
         if (elapsedHours == 0) {
-            hours="";
+            hours = "";
         }
-        if (elapsedMinutes == 0){
-            minutes="";
+        if (elapsedMinutes == 0) {
+            minutes = "";
         }
 
         return String.format(Locale.getDefault(), "%s%s%s", days, hours, minutes);

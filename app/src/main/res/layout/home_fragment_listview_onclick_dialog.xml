@@ -7,14 +7,14 @@
         android:id="@+id/onClickDialogChildName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:layout_centerHorizontal="true"
-        android:text="Child's Name" />
+        android:text="Child's Name"
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/home_fragment_listview_onclick_dialog_listView"
-        android:layout_below="@id/onClickDialogChildName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/onClickDialogChildName" />
 
 </RelativeLayout>

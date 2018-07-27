@@ -1,6 +1,5 @@
 package org.vaccinationreminder;
 
-import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +29,7 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
     View v;
-    List<String> childrenList;
-    List<String> DOBList;
+    List<String> childrenList, DOBList, fullVaccineList;
     databaseHandler helper;
     alarmManagerClass alarm;
     ListCreator listCreator = new ListCreator();
@@ -50,14 +48,15 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final childListAdapter adap;
 
-        final ListView lv = v.findViewById(R.id.childListView);
+        final ExpandableListView lv = v.findViewById(R.id.childListView);
 
         helper = new databaseHandler(getActivity());
 
         childrenList = listCreator.getChildrenList(getActivity());
         DOBList = listCreator.getDOBList(getActivity());
+        fullVaccineList = listCreator.getFullVaccineList();
 
-        adap = new childListAdapter(Objects.requireNonNull(getActivity()), childrenList, DOBList);
+        adap = new childListAdapter(Objects.requireNonNull(getActivity()), childrenList, DOBList, fullVaccineList);
 
         lv.setAdapter(adap);
         lv.setLongClickable(true);
@@ -68,8 +67,7 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String deletedName = (String) adap.getItem(position);
-
+                String deletedName = (String) adap.getGroup(position);
                 Toast.makeText(getActivity(), childrenList.get(position) + " deleted", Toast.LENGTH_SHORT).show();
 
                 helper.delete(deletedName);
@@ -103,46 +101,64 @@ public class HomeFragment extends Fragment {
     }
 }
 
+class childListAdapter extends BaseExpandableListAdapter {
 
-class childListAdapter extends BaseAdapter {
-
-    private Context c;
-    List<String> childrenList;
+    public List<String> childrenList;
+    private Context context;
     private List<String> DOBList;
-
+    private List<String> scheduleVaccinesList;
     private alarmManagerClass alarm = new alarmManagerClass();
 
-    childListAdapter(Context context, List<String> objects, List<String> objects2) {
+    childListAdapter(Context c, List<String> objects, List<String> objects2, List<String> objects3) {
 
-        c = context;
+        context = c;
         childrenList = objects;
         DOBList = objects2;
-
+        scheduleVaccinesList = objects3;
     }
 
     @Override
-    public int getCount() {
+    public int getGroupCount() {
         return childrenList.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return childrenList.get(position);
+    public int getChildrenCount(int groupPosition) {
+        return scheduleVaccinesList.size();
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public Object getGroup(int groupPosition) {
+        return childrenList.get(groupPosition);
     }
 
-    @SuppressLint("ViewHolder")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public Object getChild(int groupPosition, int childPosition) {
+        return null;
+    }
 
-        LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         assert inflater != null;
-        convertView = inflater.inflate(R.layout.home_fragment_listview_adapter, parent, false);
+        convertView = inflater.inflate(R.layout.home_fragment_expandable_listview_adapter_layout, parent, false);
 
         TextView childNameTextView = convertView.findViewById(R.id.childName);
         TextView dobViewerTextView = convertView.findViewById(R.id.dobViewer);
@@ -150,9 +166,9 @@ class childListAdapter extends BaseAdapter {
         TextView vaccineListTextView = convertView.findViewById(R.id.nextVaccineList);
 
         OffsetCalculator offsetCalculator = new OffsetCalculator();
-        long nextDateMilliseconds = offsetCalculator.dateDiffNextDate(DOBList.get(position));
+        long nextDateMilliseconds = offsetCalculator.dateDiffNextDate(DOBList.get(groupPosition));
 
-        String vaccineList = offsetCalculator.getVaccineList(c, position, "\n");
+        String vaccineList = offsetCalculator.getVaccineList(context, groupPosition, "\n");
 
         Calendar calendar = Calendar.getInstance();
 
@@ -160,22 +176,21 @@ class childListAdapter extends BaseAdapter {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-        childNameTextView.setText(childrenList.get(position));
-        dobViewerTextView.setText(DOBList.get(position));
-
+        childNameTextView.setText(childrenList.get(groupPosition));
+        dobViewerTextView.setText(DOBList.get(groupPosition));
 
         if (nextDateMilliseconds != 1) {
 
             offsetViewerTextView.setText(formatter.format(calendar.getTime()));
             vaccineListTextView.setText(vaccineList);
 
-
-            boolean alarmNotUp = (PendingIntent.getBroadcast(c, position, new Intent(c, AlarmReceiver.class), PendingIntent.FLAG_NO_CREATE) != null);
+            boolean alarmNotUp = (PendingIntent.getBroadcast(context, groupPosition, new Intent(context, AlarmReceiver.class),
+                    PendingIntent.FLAG_NO_CREATE) != null);
 
             if (alarmNotUp) {
 
                 Log.d("alarm", "setAlarm called");
-                alarm.setAlarm(calendar.getTimeInMillis(), c, position);
+                alarm.setAlarm(calendar.getTimeInMillis(), context, groupPosition);
 
 
             } else {
@@ -191,5 +206,33 @@ class childListAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        convertView = Objects.requireNonNull(inflater).inflate(R.layout.home_fragment_expandable_listview_sublist_layout, parent, false);
+
+        TextView indices, vaccineName, date;
+
+        indices = convertView.findViewById(R.id.indices);
+        vaccineName = convertView.findViewById(R.id.vaccinesName);
+        date = convertView.findViewById(R.id.VaccineDate);
+
+        indices.setText(String.format(Locale.getDefault(), "%s", Integer.toString(childPosition + 1)));
+        vaccineName.setText(scheduleVaccinesList.get(childPosition));
+
+        ListCreator creator = new ListCreator();
+        List<String> nextVaccinesDateList = creator.getFullVaccineDatesList(DOBList.get(groupPosition));
+        date.setText(nextVaccinesDateList.get(childPosition));
+
+        return convertView;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return false;
     }
 }

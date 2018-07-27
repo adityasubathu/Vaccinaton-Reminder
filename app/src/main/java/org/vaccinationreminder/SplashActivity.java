@@ -36,8 +36,7 @@ public class SplashActivity extends AppCompatActivity {
                         Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(i);
                         finish();
-                    }
-                    else {
+                    } else {
 
                         Intent i = new Intent(SplashActivity.this, MainFragmentHolder.class);
                         startActivity(i);
