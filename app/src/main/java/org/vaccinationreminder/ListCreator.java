@@ -84,7 +84,6 @@ public class ListCreator {
 
             if (calculator.weekList[i - 1] == calculator.weekList[i]) {
 
-                tempList.clear();
                 tempList.add(calculator.vaccineList[i - 1]);
 
             } else {
@@ -99,17 +98,24 @@ public class ListCreator {
                         s.append(tempList.get(j)).append("");
                     } else {
 
+                        if (j == 2) {
+
+                            s.append(tempList.get(j)).append("\n");
+
+                        }
+
                         s.append(tempList.get(j)).append(", ");
                     }
-
                 }
 
                 String appendedVaccineList = s.toString();
                 fullVaccineList.add(appendedVaccineList);
+                tempList.clear();
 
             }
 
         }
+        fullVaccineList.add("Tdap/Td, HPV");
 
         return fullVaccineList;
 
@@ -170,6 +176,9 @@ public class ListCreator {
 
         }
 
+        calendar.setTime(DOB);
+        calendar.add(Calendar.YEAR, 10);
+        fullVaccineDatesList.add(formatter.format(calendar.getTime()));
 
         return fullVaccineDatesList;
     }
