@@ -88,7 +88,7 @@ public class ListCreator {
 
             } else {
 
-                tempList.add(calculator.vaccineList[i]);
+                tempList.add(calculator.vaccineList[i-1]);
                 StringBuilder s = new StringBuilder();
 
                 for (int j = 0; j < tempList.size(); j++) {
@@ -147,6 +147,8 @@ public class ListCreator {
 
         calendar.setTime(DOB);
 
+        temporaryList.add(1);
+
 
         for (int i = 1; i < calculator.weekList.length; i++) {
 
@@ -167,10 +169,7 @@ public class ListCreator {
             calendar.add(Calendar.YEAR, year);
             calendar.add(Calendar.WEEK_OF_YEAR, weeks);
 
-            if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
-
-                fullVaccineDatesList.add(formatter.format(calendar.getTime()));
-            }
+            fullVaccineDatesList.add(formatter.format(calendar.getTime()));
 
             calendar.setTime(DOB);
 
@@ -178,7 +177,7 @@ public class ListCreator {
 
         calendar.setTime(DOB);
         calendar.add(Calendar.YEAR, 10);
-        fullVaccineDatesList.add(formatter.format(calendar.getTime()));
+        //fullVaccineDatesList.add(formatter.format(calendar.getTime()));
 
         return fullVaccineDatesList;
     }
