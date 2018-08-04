@@ -88,7 +88,7 @@ public class ListCreator {
 
             } else {
 
-                tempList.add(calculator.vaccineList[i-1]);
+                tempList.add(calculator.vaccineList[i - 1]);
                 StringBuilder s = new StringBuilder();
 
                 for (int j = 0; j < tempList.size(); j++) {
@@ -148,7 +148,6 @@ public class ListCreator {
         calendar.setTime(DOB);
 
         temporaryList.add(1);
-
 
         for (int i = 1; i < calculator.weekList.length; i++) {
 

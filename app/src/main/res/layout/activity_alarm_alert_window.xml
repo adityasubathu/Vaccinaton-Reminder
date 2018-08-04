@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:padding="8dp"
-        android:text="Vaccination Day"
+        android:text="@string/vaccination_day"
         android:textSize="40sp" />
 
     <TextView
@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/alarmAlertVaccDayTitle"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
         android:paddingBottom="8dp"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/alarmAlertChildName"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
         android:paddingBottom="8dp"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
@@ -44,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/alarmAlertVaccineList"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
         android:paddingBottom="8dp"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
@@ -56,7 +59,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/alarmAlertCurrentDateTime"
         android:layout_centerHorizontal="true"
-        android:text="Dismiss" />
+        android:layout_marginTop="32dp"
+        android:text="Dismiss"
+        android:textSize="20sp" />
 
 
 </RelativeLayout>
