@@ -67,7 +67,6 @@ public class HomeFragment extends Fragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
                 String deletedName = (String) adap.getGroup(position);
                 Toast.makeText(getActivity(), childrenList.get(position) + " deleted", Toast.LENGTH_SHORT).show();
 
@@ -136,7 +135,7 @@ class childListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return null;
+       return scheduleVaccinesList.get(childPosition);
     }
 
     @Override
@@ -146,7 +145,7 @@ class childListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childPosition;
     }
 
     @Override
@@ -174,7 +173,6 @@ class childListAdapter extends BaseExpandableListAdapter {
         String vaccineList = offsetCalculator.getVaccineList(context, groupPosition, "\n");
 
         Calendar calendar = Calendar.getInstance();
-
         calendar.setTimeInMillis(nextDateMilliseconds);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -189,8 +187,7 @@ class childListAdapter extends BaseExpandableListAdapter {
             offsetViewerTextView.setText(nextDateList.get(groupPosition));
             vaccineListTextView.setText(vaccineList);
 
-            boolean alarmNotUp = (PendingIntent.getBroadcast(context, groupPosition, new Intent(context, AlarmReceiver.class),
-                    PendingIntent.FLAG_NO_CREATE) != null);
+            boolean alarmNotUp = (PendingIntent.getBroadcast(context, groupPosition, new Intent(context, AlarmReceiver.class), PendingIntent.FLAG_NO_CREATE) != null);
 
             if (alarmNotUp) {
 
