@@ -76,16 +76,16 @@ public class AddNewChildFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int y, int m, int d) {
 
-                       String mm, dd;
+                        String mm, dd;
 
-                       mm = Integer.toString(++m);
-                       dd = Integer.toString(d);
+                        mm = Integer.toString(++m);
+                        dd = Integer.toString(d);
 
-                       if (mm.length() == 1) {
+                        if (mm.length() == 1) {
 
-                           mm = "0" + mm;
+                            mm = "0" + mm;
 
-                       }
+                        }
 
                         if (dd.length() == 1) {
 
@@ -93,7 +93,7 @@ public class AddNewChildFragment extends Fragment {
 
                         }
 
-                        DateOfBirthTextView.setText(String.format("%s/%s/%s", dd,mm,y));
+                        DateOfBirthTextView.setText(String.format("%s/%s/%s", dd, mm, y));
 
                     }
                 }, year, month, day);

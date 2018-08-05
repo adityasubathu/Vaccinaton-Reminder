@@ -25,4 +25,5 @@
     <string name="vaccines_info">Vaccines Info</string>
     <string name="alarm_manager">Alarm Manager</string>
     <string name="vacc_complete">Vaccination Complete</string>
+    <string name="vaccination_day">Vaccination Day</string>
 </resources>

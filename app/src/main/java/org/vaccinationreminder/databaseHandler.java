@@ -80,8 +80,7 @@ public class databaseHandler {
         public void onCreate(SQLiteDatabase db) {
             try {
 
-                db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(255) ,"
-                        + DATE_OF_BIRTH + " VARCHAR(225)," + GENDER + " VARCHAR(255));");
+                db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(255) ," + DATE_OF_BIRTH + " VARCHAR(225)," + GENDER + " VARCHAR(255));");
             } catch (Exception e) {
                 Message.message(context, "" + e);
             }

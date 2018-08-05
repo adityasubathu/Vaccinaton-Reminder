@@ -1,7 +1,7 @@
 package org.vaccinationreminder;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,13 +25,15 @@ public class AlarmAlertWindow extends AppCompatActivity {
         alarmAlertCurrentSysTime = findViewById(R.id.alarmAlertCurrentDateTime);
         alarmAlertDismissButton = findViewById(R.id.alarmAlertDismissButton);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
 
         Calendar calendar = Calendar.getInstance();
 
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         alarmAlertCurrentSysTime.setText(formatter.format(calendar.getTime()));
+
+        //alarmAlertVaccineList.setText();
 
         alarmAlertDismissButton.setOnClickListener(new View.OnClickListener() {
             @Override

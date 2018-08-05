@@ -42,7 +42,7 @@ public class alarmManagerFragment extends Fragment {
         ListCreator listCreator = new ListCreator();
         OffsetCalculator offsetCalculator = new OffsetCalculator();
 
-        for (int i = 0; i < listCreator.getChildrenList(getActivity()).size(); i++){
+        for (int i = 0; i < listCreator.getChildrenList(getActivity()).size(); i++) {
 
             alarmTitleList.add(offsetCalculator.getVaccineList(getActivity(), i, ", "));
 
@@ -99,7 +99,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         TextView alarmRemainingTimeTextView = convertView.findViewById(R.id.remainingTime);
         TextView nameOfChildTextView = convertView.findViewById(R.id.alarmChildName);
 
-        long offsetMilliSeconds = offsetCalculator.dateDiffNextDate(listCreator.getDOBList(context).get(position));
+        long offsetMilliSeconds = offsetCalculator.getNextVaccineDate(listCreator.getDOBList(context).get(position));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
         calendar.add(Calendar.HOUR, 8);
@@ -110,7 +110,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         String remainingTime = getRemainingTime(position);
         String date = dateFormatter.format(calendar.getTime());
 
-        long nextVaccineDate = new OffsetCalculator().dateDiffNextDate(new ListCreator().getDOBList(context).get(position));
+        long nextVaccineDate = new OffsetCalculator().getNextVaccineDate(new ListCreator().getDOBList(context).get(position));
 
         if (nextVaccineDate < System.currentTimeMillis()) {
 
@@ -121,7 +121,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
             alarmTitleTextView.setText(alarmTitleList.get(position));
             alarmRemainingTimeTextView.setText(remainingTime);
             alarmDateTextView.setText(date);
-            alarmTriggerTimeTextView.setText(timeFormatter.format(calendar.getTime()));
+            alarmTriggerTimeTextView.setText(timeFormatter.format(calendar.getTime()).toUpperCase(Locale.getDefault()));
         }
 
         nameOfChildTextView.setText(listCreator.getChildrenList(context).get(position));
@@ -129,13 +129,14 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private String getRemainingTime(int position){
+    private String getRemainingTime(int position) {
 
         OffsetCalculator offsetCalculator = new OffsetCalculator();
 
-        long offsetMilliSeconds = offsetCalculator.dateDiffNextDate(listCreator.getDOBList(context).get(position));
+        long offsetMilliSeconds = offsetCalculator.getNextVaccineDate(listCreator.getDOBList(context).get(position));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
+        calendar.add(Calendar.HOUR, 8);
 
         Calendar currentTime = Calendar.getInstance();
         currentTime.setTimeInMillis(System.currentTimeMillis());
@@ -153,12 +154,22 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         millis = millis % hoursInMilli;
 
         long elapsedMinutes = millis / minutesInMilli;
-        millis = millis % minutesInMilli;
 
-        long elapsedSeconds = millis / secondsInMilli;
+        String days = String.format(Locale.getDefault(), "%s Days:", Long.toString(elapsedDays));
+        String hours = String.format(Locale.getDefault(), "%s Hours:", Long.toString(elapsedHours));
+        String minutes = String.format(Locale.getDefault(), "%s Minutes", Long.toString(elapsedMinutes));
 
-        return String.format(Locale.getDefault(), "%s Days:%s Hours:%s Minutes", Long.toString(elapsedDays), Long.toString(elapsedHours),
-                Long.toString(elapsedMinutes));
+        if (elapsedDays == 0) {
+            days = "";
+        }
+        if (elapsedHours == 0) {
+            hours = "";
+        }
+        if (elapsedMinutes == 0) {
+            minutes = "";
+        }
+
+        return String.format(Locale.getDefault(), "%s%s%s", days, hours, minutes);
 
     }
 
