@@ -84,9 +84,9 @@
         android:layout_below="@id/signupButton"
         android:layout_centerHorizontal="true"
 
-        android:textSize="15sp"
+        android:text="@string/login_launcher_text"
         android:textColor="#ff2269d4"
-        android:text="@string/login_launcher_text"/>
+        android:textSize="15sp" />
 
 
 </RelativeLayout>

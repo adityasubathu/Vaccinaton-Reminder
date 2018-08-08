@@ -135,7 +135,7 @@ class childListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-       return scheduleVaccinesList.get(childPosition);
+        return scheduleVaccinesList.get(childPosition);
     }
 
     @Override

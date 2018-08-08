@@ -94,8 +94,7 @@ public class signUpFragment extends Fragment implements View.OnClickListener {
 
             Toast.makeText(getActivity(), "Email already registered", Toast.LENGTH_SHORT).show();
 
-            emailSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            emailSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
             emailSignupField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
 
@@ -103,8 +102,7 @@ public class signUpFragment extends Fragment implements View.OnClickListener {
 
         } else if (email.isEmpty()) {
 
-            emailSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            emailSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
             emailSignupField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
             emailSignupField.setHintTextColor(getResources().getColor(R.color.error_red));
@@ -113,8 +111,7 @@ public class signUpFragment extends Fragment implements View.OnClickListener {
 
         } else if (username.isEmpty()) {
 
-            usernameSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            usernameSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
             usernameSignupField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
             usernameSignupField.setHintTextColor(getResources().getColor(R.color.error_red));
@@ -125,8 +122,7 @@ public class signUpFragment extends Fragment implements View.OnClickListener {
 
             Toast.makeText(getActivity(), "Username already registered", Toast.LENGTH_SHORT).show();
 
-            usernameSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            usernameSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
             usernameSignupField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
 
@@ -135,8 +131,7 @@ public class signUpFragment extends Fragment implements View.OnClickListener {
 
         } else if (fullName.isEmpty()) {
 
-            fullNameSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            fullNameSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
             fullNameSignupField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
             fullNameSignupField.setHintTextColor(getResources().getColor(R.color.error_red));
@@ -146,12 +141,11 @@ public class signUpFragment extends Fragment implements View.OnClickListener {
         } else if (password.isEmpty()) {
 
             Toast.makeText(getActivity(), "Please enter a password", Toast.LENGTH_SHORT).show();
-            passwordSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            passwordSignupField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
             passwordSignupField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
             passwordSignupField.setHintTextColor(getResources().getColor(R.color.error_red));
-            
+
         } else {
 
             SharedPreferences.Editor e = mySharedPrefs.edit();

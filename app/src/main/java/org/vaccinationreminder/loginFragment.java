@@ -16,8 +16,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,8 +60,7 @@ public class loginFragment extends Fragment implements View.OnClickListener {
 
                 usernameField.setCompoundDrawables(null, null, null, null);
 
-                usernameField.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary),
-                        PorterDuff.Mode.SRC_ATOP);
+                usernameField.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
             }
 
             @Override
@@ -82,8 +79,7 @@ public class loginFragment extends Fragment implements View.OnClickListener {
 
                 passwordField.setCompoundDrawables(null, null, null, null);
 
-                passwordField.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary),
-                        PorterDuff.Mode.SRC_ATOP);
+                passwordField.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
             }
 
@@ -130,22 +126,18 @@ public class loginFragment extends Fragment implements View.OnClickListener {
 
             Toast.makeText(getActivity(), "Username Empty", Toast.LENGTH_SHORT).show();
 
-            usernameField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            usernameField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
-            usernameField.getBackground().setColorFilter(getResources().getColor(R.color.error_red),
-                    PorterDuff.Mode.SRC_ATOP);
+            usernameField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
             usernameField.setHintTextColor(getResources().getColor(R.color.error_red));
 
             if (password.isEmpty()) {
 
                 Toast.makeText(getActivity(), "Username & Password Empty", Toast.LENGTH_SHORT).show();
 
-                passwordField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                        ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+                passwordField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
-                passwordField.getBackground().setColorFilter(getResources().getColor(R.color.error_red),
-                        PorterDuff.Mode.SRC_ATOP);
+                passwordField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
                 passwordField.setHintTextColor(getResources().getColor(R.color.error_red));
 
             }
@@ -154,11 +146,9 @@ public class loginFragment extends Fragment implements View.OnClickListener {
 
             Toast.makeText(getActivity(), "Password Empty", Toast.LENGTH_SHORT).show();
 
-            passwordField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            passwordField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
-            passwordField.getBackground().setColorFilter(getResources().getColor(R.color.error_red),
-                    PorterDuff.Mode.SRC_ATOP);
+            passwordField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
             passwordField.setHintTextColor(getResources().getColor(R.color.error_red));
 
 
@@ -184,11 +174,9 @@ public class loginFragment extends Fragment implements View.OnClickListener {
 
             Toast.makeText(getActivity(), "Username Not Registered. Sign Up Now", Toast.LENGTH_SHORT).show();
 
-            usernameField.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                    ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+            usernameField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
 
-            usernameField.getBackground().setColorFilter(getResources().getColor(R.color.error_red),
-                    PorterDuff.Mode.SRC_ATOP);
+            usernameField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
 
             usernameField.setTextColor(getResources().getColor(R.color.error_red));
             passwordField.setTextColor(getResources().getColor(R.color.error_red));
