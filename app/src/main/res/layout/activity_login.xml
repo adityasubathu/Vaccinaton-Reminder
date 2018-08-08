@@ -5,68 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:id="@+id/syringeIcon"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:contentDescription="@string/syringeImage"
-        android:src="@drawable/vaccine" />
-
-    <TextView
-        android:id="@+id/appName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/syringeIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/vaccine_reminder"
-        android:textSize="45sp" />
-
-    <LinearLayout
-        android:id="@+id/linear"
+    <RelativeLayout
+        android:id="@+id/headerBackground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/appName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="60dp"
-        android:orientation="vertical">
+        android:layout_height="150dp"
+        android:background="#ff2269d4">
 
-        <EditText
-            android:id="@+id/usernameField"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="#E3E1E1"
-            android:hint="@string/username"
-            android:inputType="textNoSuggestions"
-            android:padding="4dp"
-            android:textSize="22sp" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:fontFamily=""
+            android:text="@string/app_name"
+            android:textColor="#ffffff"
+            android:textSize="40sp" />
+    </RelativeLayout>
 
-        <EditText
-            android:id="@+id/passwordField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:background="#E3E1E1"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:padding="4dp"
-            android:textSize="22sp" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear"
-        android:layout_centerHorizontal="true"
-        android:onClick="loginMethod"
-        android:text="@string/login"
-        android:textSize="18sp" />
+    <FrameLayout
+        android:id="@+id/loginActivityFragmentHolder"
+        android:layout_below="@id/headerBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

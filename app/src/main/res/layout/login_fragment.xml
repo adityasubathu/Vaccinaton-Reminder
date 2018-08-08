@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginTopText" />
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="60dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/usernameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="#ff2269d4"
+            android:hint="@string/username"
+            android:inputType="textNoSuggestions"
+            android:padding="12dp"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/passwordField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="#ff2269d4"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/linear"
+        android:textAllCaps="false"
+        android:layout_marginStart="90dp"
+        android:background="@drawable/button_background"
+        android:textColor="#ffffff"
+        android:fontFamily="sans-serif-light"
+        android:layout_centerHorizontal="true"
+        android:text="@string/login"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/signUpLauncherTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp"
+        android:textColor="#ff2269d4"
+        android:text="@string/sign_up_launcher_text"/>
+
+
+</RelativeLayout>

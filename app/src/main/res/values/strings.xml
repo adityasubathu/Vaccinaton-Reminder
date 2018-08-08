@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Vaccination Reminder</string>
-    <string name="vaccine_reminder">Vaccine Reminder</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -8,7 +7,7 @@
     <string name="signup">Signup</string>
     <string name="syringeImage">syringeImage</string>
     <string name="full_name">Full Name</string>
-    <string name="sign_up_alert">User Not Registered. Please Sign Up.</string>
+    <string name="sign_up_alert">Sign Up</string>
     <string name="welcome">"Welcome, "</string>
     <string name="add_children">Add Child</string>
     <string name="home">Home</string>
@@ -26,4 +25,6 @@
     <string name="alarm_manager">Alarm Manager</string>
     <string name="vacc_complete">Vaccination Complete</string>
     <string name="vaccination_day">Vaccination Day</string>
+    <string name="sign_up_launcher_text">Not Registered? Sign Up Now</string>
+    <string name="login_launcher_text">Already have an account? Login Here</string>
 </resources>
