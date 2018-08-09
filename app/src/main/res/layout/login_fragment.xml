@@ -50,7 +50,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="90dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/button_background"
+        android:background="@color/colorPrimary"
         android:fontFamily="sans-serif-light"
         android:text="@string/login"
         android:textAllCaps="false"
@@ -64,6 +64,7 @@
         android:layout_below="@id/loginButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+        android:padding="8dp"
         android:text="@string/sign_up_launcher_text"
         android:textColor="#ff2269d4"
         android:textSize="15sp" />

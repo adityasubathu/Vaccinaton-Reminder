@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/editorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="60dp"
         android:orientation="vertical">
 
         <EditText
@@ -71,7 +70,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="80dp"
-        android:background="@drawable/button_background"
+        android:background="@color/colorPrimary"
         android:fontFamily="sans-serif-light"
         android:text="@string/signup"
         android:textColor="#ffffff"
@@ -83,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/signupButton"
         android:layout_centerHorizontal="true"
-
+        android:padding="8dp"
         android:text="@string/login_launcher_text"
         android:textColor="#ff2269d4"
         android:textSize="15sp" />

@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
-public class loginFragment extends Fragment implements View.OnClickListener {
+public class LoginActivityLoginFragment extends Fragment implements View.OnClickListener {
 
     static String email, password, username, storedUsername, storedPassword;
     EditText usernameField, passwordField;
@@ -37,9 +37,7 @@ public class loginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.login_fragment, container, false);
-
         return v;
-
     }
 
     @Override
@@ -100,14 +98,29 @@ public class loginFragment extends Fragment implements View.OnClickListener {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
 
-                signUpFragment signUpFragment = new signUpFragment();
+                LoginActivitySignUpFragment signUpFragment = new LoginActivitySignUpFragment();
                 FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                ft.replace(R.id.loginActivityFragmentHolder, signUpFragment, "signUpFragment");
+                ft.replace(R.id.loginActivityFragmentHolder, signUpFragment, "LoginActivitySignUpFragment");
                 ft.commit();
             }
         });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (SplashActivity.publicUsername != null && !SplashActivity.publicUsername.isEmpty()) {
+
+            usernameField.setText(SplashActivity.publicUsername);
+            passwordField.requestFocus();
+        } else {
+
+            usernameField.requestFocus();
+        }
 
     }
 
@@ -124,63 +137,83 @@ public class loginFragment extends Fragment implements View.OnClickListener {
 
         if (username.isEmpty()) {
 
-            Toast.makeText(getActivity(), "Username Empty", Toast.LENGTH_SHORT).show();
-
-            usernameField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
-
-            usernameField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
-            usernameField.setHintTextColor(getResources().getColor(R.color.error_red));
+            changeColorToRed(usernameField);
+            usernameField.setError("Please enter your username");
 
             if (password.isEmpty()) {
 
-                Toast.makeText(getActivity(), "Username & Password Empty", Toast.LENGTH_SHORT).show();
-
-                passwordField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
-
-                passwordField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
-                passwordField.setHintTextColor(getResources().getColor(R.color.error_red));
-
+                changeColorToRed(passwordField);
+                passwordField.setError("Password cannot be empty");
             }
 
         } else if (password.isEmpty()) {
 
-            Toast.makeText(getActivity(), "Password Empty", Toast.LENGTH_SHORT).show();
-
-            passwordField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
-
-            passwordField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
-            passwordField.setHintTextColor(getResources().getColor(R.color.error_red));
-
+            changeColorToRed(passwordField);
+            passwordField.setError("Password cannot be empty");
 
         } else if (username.equals(storedUsername)) {
 
             if (password.isEmpty()) {
 
-                Toast.makeText(getActivity(), "Please enter password", Toast.LENGTH_SHORT).show();
+                changeColorToRed(passwordField);
+                passwordField.setError("Password cannot be empty");
 
             } else if (password.equals(storedPassword)) {
 
                 Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
+
+                SharedPreferences.Editor e = mySharedPrefs.edit();
+                e.putBoolean("login", true);
+                e.apply();
 
                 Intent i = new Intent(getActivity(), MainFragmentHolder.class);
                 startActivity(i);
                 getActivity().finish();
 
             } else {
-                Toast.makeText(getActivity(), "Incorrect Password", Toast.LENGTH_SHORT).show();
+
+                changeColorToRed(passwordField);
+                passwordField.setError("Password doesn't match the username");
             }
 
         } else {
 
-            Toast.makeText(getActivity(), "Username Not Registered. Sign Up Now", Toast.LENGTH_SHORT).show();
-
-            usernameField.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
-
-            usernameField.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
-
-            usernameField.setTextColor(getResources().getColor(R.color.error_red));
-            passwordField.setTextColor(getResources().getColor(R.color.error_red));
+            changeColorToRed(usernameField);
+            usernameField.setError("Username Not Registered");
         }
+
+    }
+
+    private void changeColorToRed(@NonNull final EditText field) {
+
+        field.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
+
+        field.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
+
+        field.setHintTextColor(getResources().getColor(R.color.error_red));
+
+        field.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                field.setCompoundDrawables(null, null, null, null);
+
+                field.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+
+                field.setHintTextColor(getResources().getColor(R.color.textColorBlack));
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
     }
 }
