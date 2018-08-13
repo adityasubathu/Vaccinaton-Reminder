@@ -1,4 +1,4 @@
-package org.vaccinationreminder;
+package com.vaccinationreminder;
 
 import org.junit.Test;
 

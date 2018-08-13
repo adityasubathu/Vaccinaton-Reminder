@@ -1,4 +1,4 @@
-package org.vaccinationreminder;
+package com.adityasubathu.vaccinationreminder;
 
 import android.app.PendingIntent;
 import android.content.Context;

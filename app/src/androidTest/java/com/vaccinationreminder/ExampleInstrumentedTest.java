@@ -1,4 +1,4 @@
-package org.vaccinationreminder;
+package com.vaccinationreminder;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

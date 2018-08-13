@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.vaccinationreminder">
+    package="com.adityasubathu.vaccinationreminder">
 
     <application
         android:allowBackup="false"
@@ -12,7 +12,7 @@
         android:theme="@style/VaccineReminderMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".LoginActivity"
+            android:name="com.adityasubathu.vaccinationreminder.LoginActivity"
             android:theme="@style/VaccineReminderMaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +21,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainFragmentHolder"
+            android:name="com.adityasubathu.vaccinationreminder.MainFragmentHolder"
             android:theme="@style/VaccineReminderMaterialTheme" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.adityasubathu.vaccinationreminder.SplashActivity"
             android:theme="@style/VaccineReminderMaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,11 +33,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlarmAlertWindow"
+            android:name="com.adityasubathu.vaccinationreminder.AlarmAlertWindow"
             android:theme="@style/VaccineReminderMaterialTheme" />
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name="com.adityasubathu.vaccinationreminder.AlarmReceiver"
             android:enabled="true"
             android:process=":remote" />
 

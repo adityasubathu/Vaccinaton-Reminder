@@ -1,4 +1,4 @@
-package org.vaccinationreminder;
+package com.adityasubathu.vaccinationreminder;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
