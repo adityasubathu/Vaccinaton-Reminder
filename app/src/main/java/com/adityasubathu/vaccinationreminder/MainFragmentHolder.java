@@ -19,7 +19,6 @@ public class MainFragmentHolder extends AppCompatActivity {
     DrawerLayout HomeActivityNavDrawer;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_holder);
@@ -77,6 +76,10 @@ public class MainFragmentHolder extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void setActionBarTitle(String title) {
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
     }
 
     @Override

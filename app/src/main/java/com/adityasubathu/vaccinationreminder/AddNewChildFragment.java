@@ -35,7 +35,7 @@ public class AddNewChildFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.add_new_child_fragment, container, false);
-
+        ((MainFragmentHolder) Objects.requireNonNull(getActivity())).setActionBarTitle("Add Child");
         return v;
     }
 

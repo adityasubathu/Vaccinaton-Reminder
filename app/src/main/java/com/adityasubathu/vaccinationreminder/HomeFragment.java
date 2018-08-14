@@ -31,7 +31,7 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
     View v;
-    List<String> childrenList, DOBList, fullVaccineList;
+    List<String> childrenList, DOBList;
     databaseHandler helper;
     alarmManagerClass alarm;
     ListCreator listCreator = new ListCreator();
@@ -42,6 +42,8 @@ public class HomeFragment extends Fragment {
 
         v = getLayoutInflater().inflate(R.layout.home_fragment, container, false);
         setHasOptionsMenu(true);
+
+        ((MainFragmentHolder) Objects.requireNonNull(getActivity())).setActionBarTitle("Home");
         return v;
     }
 
@@ -56,9 +58,8 @@ public class HomeFragment extends Fragment {
 
         childrenList = listCreator.getChildrenList(getActivity());
         DOBList = listCreator.getDOBList(getActivity());
-        fullVaccineList = listCreator.getFullVaccineList();
 
-        adap = new childListAdapter(Objects.requireNonNull(getActivity()), childrenList, DOBList, fullVaccineList);
+        adap = new childListAdapter(Objects.requireNonNull(getActivity()), childrenList, DOBList, new dataHolder().vaccineList);
 
         lv.setAdapter(adap);
         lv.setLongClickable(true);
@@ -74,7 +75,6 @@ public class HomeFragment extends Fragment {
                 helper.delete(deletedName);
                 adap.childrenList.remove(position);
                 adap.DOBList.remove(position);
-                adap.scheduleVaccinesList.remove(position);
                 adap.nextDateList.remove(position);
                 adap.notifyDataSetChanged();
                 alarm.cancelAlarm(getActivity(), position);
@@ -111,7 +111,8 @@ public class HomeFragment extends Fragment {
 
 class childListAdapter extends BaseExpandableListAdapter {
 
-    public List<String> childrenList, DOBList, scheduleVaccinesList, nextDateList = new ArrayList<>();
+    List<String> childrenList, DOBList, nextDateList = new ArrayList<>();
+    private List<String> scheduleVaccinesList;
     private Context context;
     private alarmManagerClass alarm = new alarmManagerClass();
 
@@ -170,25 +171,28 @@ class childListAdapter extends BaseExpandableListAdapter {
         TextView dobViewerTextView = convertView.findViewById(R.id.dobViewer);
         TextView offsetViewerTextView = convertView.findViewById(R.id.offsetViewer);
         TextView vaccineListTextView = convertView.findViewById(R.id.nextVaccineList);
+        TextView genderViewerTextView = convertView.findViewById(R.id.genderViewer);
 
-        OffsetCalculator offsetCalculator = new OffsetCalculator();
+        dataHolder dataHolder = new dataHolder();
         String s1 = DOBList.get(groupPosition);
-        long nextDateMilliseconds = offsetCalculator.getNextVaccineDate(s1);
+        long nextDateMilliseconds = dataHolder.getNextVaccineDate(s1);
 
-        String vaccineList = offsetCalculator.getVaccineList(context, groupPosition, "\n");
+        String vaccineList = dataHolder.getVaccineList(context, groupPosition, ", ");
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(nextDateMilliseconds);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
+        ListCreator creator = new ListCreator();
+
         childNameTextView.setText(childrenList.get(groupPosition));
         dobViewerTextView.setText(DOBList.get(groupPosition));
+        genderViewerTextView.setText(creator.getGenderList(context).get(groupPosition));
 
         nextDateList.add(formatter.format(calendar.getTime()));
 
         if (nextDateMilliseconds != 1) {
-
             offsetViewerTextView.setText(nextDateList.get(groupPosition));
             vaccineListTextView.setText(vaccineList);
 

@@ -29,7 +29,7 @@ public class alarmManagerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.alarm_manager_fragment, container, false);
-
+        ((MainFragmentHolder) Objects.requireNonNull(getActivity())).setActionBarTitle("Alarms");
         return v;
     }
 
@@ -40,11 +40,11 @@ public class alarmManagerFragment extends Fragment {
         ListView lv = v.findViewById(R.id.alarmManagerFragmentListView);
         List<String> alarmTitleList = new ArrayList<>();
         ListCreator listCreator = new ListCreator();
-        OffsetCalculator offsetCalculator = new OffsetCalculator();
+        dataHolder dataHolder = new dataHolder();
 
         for (int i = 0; i < listCreator.getChildrenList(getActivity()).size(); i++) {
 
-            alarmTitleList.add(offsetCalculator.getVaccineList(getActivity(), i, ", "));
+            alarmTitleList.add(dataHolder.getVaccineList(getActivity(), i, ", "));
 
         }
 
@@ -87,7 +87,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        OffsetCalculator offsetCalculator = new OffsetCalculator();
+        dataHolder dataHolder = new dataHolder();
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -99,7 +99,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         TextView alarmRemainingTimeTextView = convertView.findViewById(R.id.remainingTime);
         TextView nameOfChildTextView = convertView.findViewById(R.id.alarmChildName);
 
-        long offsetMilliSeconds = offsetCalculator.getNextVaccineDate(listCreator.getDOBList(context).get(position));
+        long offsetMilliSeconds = dataHolder.getNextVaccineDate(listCreator.getDOBList(context).get(position));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
         calendar.add(Calendar.HOUR, 8);
@@ -110,7 +110,7 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
         String remainingTime = getRemainingTime(position);
         String date = dateFormatter.format(calendar.getTime());
 
-        long nextVaccineDate = new OffsetCalculator().getNextVaccineDate(new ListCreator().getDOBList(context).get(position));
+        long nextVaccineDate = new dataHolder().getNextVaccineDate(new ListCreator().getDOBList(context).get(position));
 
         if (nextVaccineDate < System.currentTimeMillis()) {
 
@@ -131,9 +131,9 @@ class alarmManagerFragmentAdapter extends BaseAdapter {
 
     private String getRemainingTime(int position) {
 
-        OffsetCalculator offsetCalculator = new OffsetCalculator();
+        dataHolder dataHolder = new dataHolder();
 
-        long offsetMilliSeconds = offsetCalculator.getNextVaccineDate(listCreator.getDOBList(context).get(position));
+        long offsetMilliSeconds = dataHolder.getNextVaccineDate(listCreator.getDOBList(context).get(position));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(offsetMilliSeconds);
         calendar.add(Calendar.HOUR, 8);

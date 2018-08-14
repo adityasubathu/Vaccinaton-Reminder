@@ -26,7 +26,7 @@ public class VaccineInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.vaccine_info_fragment, container, false);
-
+        ((MainFragmentHolder) Objects.requireNonNull(getActivity())).setActionBarTitle("Vaccines Info");
         return v;
     }
 
@@ -37,17 +37,11 @@ public class VaccineInfoFragment extends Fragment {
         ListView lv = v.findViewById(R.id.vaccineListView);
         List<String> weeks = new ArrayList<>();
 
-        weeks.add("1");
+        dataHolder dataHolder = new dataHolder();
 
-        OffsetCalculator offsetCalculator = new OffsetCalculator();
+        for (int i = 1; i < dataHolder.weekList.size(); i++) {
 
-        for (int i = 1; i < offsetCalculator.weekList.length; i++) {
-
-            if (offsetCalculator.weekList[i] > offsetCalculator.weekList[i - 1]) {
-
-                weeks.add(Integer.toString(offsetCalculator.weekList[i + 1]));
-
-            }
+            weeks.add(Integer.toString(dataHolder.weekList.get(i)));
         }
 
         vaccineListAdapter adap = new vaccineListAdapter(getActivity(), weeks);
@@ -92,38 +86,13 @@ class vaccineListAdapter extends BaseAdapter {
 
         convertView = Objects.requireNonNull(inflater).inflate(R.layout.vaccine_list_adapter, parent, false);
 
-        List<String> vaccines = new ArrayList<>();
-        StringBuilder stringBuilder = new StringBuilder();
-
-        OffsetCalculator offsetCalculator = new OffsetCalculator();
-
-        for (int i = 0; i < offsetCalculator.weekList.length; i++) {
-
-            if (offsetCalculator.weekList[i] == Integer.parseInt(weeks.get(position))) {
-
-                vaccines.add(offsetCalculator.vaccineList[i]);
-
-            }
-
-        }
-
-        for (int j = 0; j < vaccines.size(); j++) {
-
-            if (j == vaccines.size() - 1) {
-
-                stringBuilder.append(vaccines.get(j)).append("");
-            } else {
-
-                stringBuilder.append(vaccines.get(j)).append(", ");
-            }
-
-        }
+        dataHolder dataHolder = new dataHolder();
 
         TextView vaccineNameTextView = convertView.findViewById(R.id.VaccineName);
         TextView weeksNumberTextView = convertView.findViewById(R.id.WeekNumber);
         TextView indexTextView = convertView.findViewById(R.id.index);
 
-        vaccineNameTextView.setText(stringBuilder);
+        vaccineNameTextView.setText(dataHolder.vaccineList.get(position));
 
         if (weeks.get(position).equals("1")) {
 

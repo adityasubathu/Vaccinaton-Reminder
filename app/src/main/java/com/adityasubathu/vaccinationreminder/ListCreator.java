@@ -73,60 +73,32 @@ public class ListCreator {
         return childrenList;
     }
 
-    public List<String> getFullVaccineList() {
+    public List<String> getGenderList(Context context) {
 
-        OffsetCalculator calculator = new OffsetCalculator();
+        List<String> genderList = new ArrayList<>();
+        databaseHandler helper = new databaseHandler(context);
 
-        List<String> fullVaccineList = new ArrayList<>();
-        List<String> tempList = new ArrayList<>();
+        String data = helper.getData();
 
-        for (int i = 1; i < calculator.weekList.length; i++) {
+        String[] arr = data.split(" {2}");
 
-            if (calculator.weekList[i - 1] == calculator.weekList[i]) {
+        for (int i = 0; i < arr.length; i++) {
 
-                tempList.add(calculator.vaccineList[i - 1]);
-
-            } else {
-
-                tempList.add(calculator.vaccineList[i - 1]);
-                StringBuilder s = new StringBuilder();
-
-                for (int j = 0; j < tempList.size(); j++) {
-
-                    if (j == tempList.size() - 1) {
-
-                        s.append(tempList.get(j)).append("");
-                    } else {
-
-                        if (j == 2) {
-
-                            s.append(tempList.get(j)).append("\n");
-
-                        }
-
-                        s.append(tempList.get(j)).append(", ");
-                    }
-                }
-
-                String appendedVaccineList = s.toString();
-                fullVaccineList.add(appendedVaccineList);
-                tempList.clear();
-
+            if (isInteger(arr[i])) {
+                genderList.add(arr[i + 3]);
             }
-
         }
-        fullVaccineList.add("Tdap/Td, HPV");
 
-        return fullVaccineList;
+        return genderList;
+
 
     }
 
     public List<String> getFullVaccineDatesList(String dateOfBirth) {
 
-        OffsetCalculator calculator = new OffsetCalculator();
+        dataHolder holder = new dataHolder();
 
         List<String> fullVaccineDatesList = new ArrayList<>();
-        List<Integer> temporaryList = new ArrayList<>();
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
@@ -147,36 +119,20 @@ public class ListCreator {
 
         calendar.setTime(DOB);
 
-        temporaryList.add(1);
+        for (int i = 0; i < holder.weekList.size(); i++) {
 
-        for (int i = 1; i < calculator.weekList.length; i++) {
-
-
-            if (calculator.weekList[i - 1] != calculator.weekList[i]) {
-
-                temporaryList.add(calculator.weekList[i]);
-
-            }
-
-        }
-
-        for (int i = 0; i < temporaryList.size(); i++) {
-
-            int year = temporaryList.get(i) / 52;
-            int weeks = temporaryList.get(i) - (52 * year);
+            int year = holder.weekList.get(i) / 52;
+            int weeks = holder.weekList.get(i) - (52 * year);
 
             calendar.add(Calendar.YEAR, year);
             calendar.add(Calendar.WEEK_OF_YEAR, weeks);
-
             fullVaccineDatesList.add(formatter.format(calendar.getTime()));
-
             calendar.setTime(DOB);
 
         }
 
         calendar.setTime(DOB);
         calendar.add(Calendar.YEAR, 10);
-        //fullVaccineDatesList.add(formatter.format(calendar.getTime()));
 
         return fullVaccineDatesList;
     }

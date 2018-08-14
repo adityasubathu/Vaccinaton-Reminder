@@ -11,11 +11,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -161,9 +158,7 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
 
         } else if (username.equals(storedUsername) && !password.equals(storedPassword)) {
             changeColorToRed(passwordField, "Password in Incorrect");
-        }
-
-        else if (username.equals(storedUsername) && password.equals(storedPassword)) {
+        } else if (username.equals(storedUsername) && password.equals(storedPassword)) {
 
             SharedPreferences.Editor e = mySharedPrefs.edit();
             e.putBoolean("login", true);
