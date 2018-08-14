@@ -5,20 +5,23 @@
     android:layout_margin="16dp"
     android:theme="@style/VaccineReminderMaterialTheme">
 
-    <TextView
-        android:id="@+id/addChildTopTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/addChildTopImageView"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_background"
+        android:contentDescription="@string/app_name"
         android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/add_child_alert"
+        android:padding="20dp"
+        android:src="@drawable/vaccine_new"
         android:textSize="22sp" />
 
     <RadioGroup
         android:id="@+id/addChildRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addChildTopTextView"
+        android:layout_below="@id/addChildTopImageView"
         android:layout_centerHorizontal="true"
         android:layout_margin="16dp"
         android:orientation="horizontal">
@@ -63,48 +66,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:background="#E3E1E1"
+            android:backgroundTint="#ff2269d4"
             android:hint="@string/full_name"
             android:inputType="textCapWords"
-            android:padding="4dp"
+            android:padding="12dp"
             android:textSize="22sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/dateOFBirthAddChildField"
-                android:layout_width="220dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:background="#E3E1E1"
+                android:backgroundTint="#ff2269d4"
                 android:hint="@string/date_of_birth"
                 android:inputType="date"
-                android:padding="4dp"
+                android:padding="12dp"
                 android:textSize="22sp" />
 
             <ImageView
                 android:id="@+id/childDOBPicker"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
+                android:layout_alignBottom="@id/dateOFBirthAddChildField"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginEnd="30dp"
                 android:contentDescription="@string/childdobpicker"
                 android:src="@drawable/ic_date" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
     <Button
         android:id="@+id/addChildConfirmButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editorAddChildLayout"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="8dp"
-        android:text="Add Child" />
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/add_child"
+        android:textColor="#ffffff"
+        android:textSize="22sp" />
 
 </RelativeLayout>

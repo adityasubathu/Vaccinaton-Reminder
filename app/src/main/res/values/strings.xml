@@ -30,4 +30,5 @@
     <string name="vaccineimage">VaccineImage</string>
     <string name="re_enter_password">Re-Enter Password</string>
     <string name="password_visibility">passwordVisibility</string>
+    <string name="add_child">Add Child</string>
 </resources>
