@@ -1,5 +1,6 @@
 package com.adityasubathu.vaccinationreminder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,17 +14,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
 
-public class LoginActivityLoginFragment extends Fragment implements View.OnClickListener {
+public class LoginActivityLoginFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
     static String email, password, username, storedUsername, storedPassword;
     EditText usernameField, passwordField;
@@ -31,6 +36,7 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
     Button loginButton;
     SharedPreferences mySharedPrefs;
     View v;
+    ImageView passwordVisible;
 
     @Nullable
     @Override
@@ -40,12 +46,16 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
         return v;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         usernameField = v.findViewById(R.id.usernameField);
         passwordField = v.findViewById(R.id.passwordField);
+        passwordVisible = v.findViewById(R.id.password_login_visibility);
+
+        passwordVisible.setOnTouchListener(this);
 
         usernameField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -135,62 +145,45 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
         storedUsername = mySharedPrefs.getString("username", null);
         storedPassword = mySharedPrefs.getString("password", null);
 
-        if (username.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty() || !username.equals(storedUsername)) {
 
-            changeColorToRed(usernameField);
-            usernameField.setError("Please enter your username");
-
-            if (password.isEmpty()) {
-
-                changeColorToRed(passwordField);
-                passwordField.setError("Password cannot be empty");
+            if (username.isEmpty()) {
+                changeColorToRed(usernameField, "Please Enter Your Username");
             }
 
-        } else if (password.isEmpty()) {
-
-            changeColorToRed(passwordField);
-            passwordField.setError("Password cannot be empty");
-
-        } else if (username.equals(storedUsername)) {
-
             if (password.isEmpty()) {
-
-                changeColorToRed(passwordField);
-                passwordField.setError("Password cannot be empty");
-
-            } else if (password.equals(storedPassword)) {
-
-                Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
-
-                SharedPreferences.Editor e = mySharedPrefs.edit();
-                e.putBoolean("login", true);
-                e.apply();
-
-                Intent i = new Intent(getActivity(), MainFragmentHolder.class);
-                startActivity(i);
-                getActivity().finish();
-
-            } else {
-
-                changeColorToRed(passwordField);
-                passwordField.setError("Password doesn't match the username");
+                changeColorToRed(passwordField, "Password Cannot Be Empty");
             }
 
-        } else {
+            if (!username.equals(storedUsername)) {
+                changeColorToRed(usernameField, "Username Not Registered");
+            }
 
-            changeColorToRed(usernameField);
-            usernameField.setError("Username Not Registered");
+        } else if (username.equals(storedUsername) && !password.equals(storedPassword)) {
+            changeColorToRed(passwordField, "Password in Incorrect");
+        }
+
+        else if (username.equals(storedUsername) && password.equals(storedPassword)) {
+
+            SharedPreferences.Editor e = mySharedPrefs.edit();
+            e.putBoolean("login", true);
+            e.apply();
+
+            Intent i = new Intent(getActivity(), MainFragmentHolder.class);
+            startActivity(i);
+            getActivity().finish();
         }
 
     }
 
-    private void changeColorToRed(@NonNull final EditText field) {
+    private void changeColorToRed(@NonNull final EditText field, String errorMessage) {
 
-        field.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
-
+        //field.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_info_error), null);
         field.getBackground().setColorFilter(getResources().getColor(R.color.error_red), PorterDuff.Mode.SRC_ATOP);
-
         field.setHintTextColor(getResources().getColor(R.color.error_red));
+
+        field.setError(errorMessage);
+        field.requestFocus();
 
         field.addTextChangedListener(new TextWatcher() {
             @Override
@@ -215,5 +208,27 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
             }
         });
 
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        switch (motionEvent.getAction()) {
+
+            case MotionEvent.ACTION_DOWN: {
+                passwordField.setTransformationMethod(null);
+                passwordField.setSelection(passwordField.getText().length());
+                return true;
+            }
+
+            case MotionEvent.ACTION_UP: {
+                passwordField.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                passwordField.setSelection(passwordField.getText().length());
+                return false;
+            }
+
+        }
+        return true;
     }
 }

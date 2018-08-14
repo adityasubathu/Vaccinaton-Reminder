@@ -28,4 +28,6 @@
     <string name="sign_up_launcher_text">Not Registered? Sign Up Now</string>
     <string name="login_launcher_text">Already have an account? Login Here</string>
     <string name="vaccineimage">VaccineImage</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="password_visibility">passwordVisibility</string>
 </resources>
