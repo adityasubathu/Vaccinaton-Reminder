@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:theme="@style/VaccineReminderMaterialTheme"
-        cardView:cardCornerRadius="4dp">
+        cardView:cardCornerRadius="4dp"
+        android:background="@color/windowBackground">
 
         <GridLayout
             android:layout_width="match_parent"
@@ -24,7 +25,9 @@
                 android:layout_columnWeight="1"
                 android:layout_row="0"
                 android:padding="8dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/windowBackground"/>
 
             <TextView
                 android:id="@+id/dobViewer"
@@ -34,7 +37,9 @@
                 android:layout_columnWeight="1"
                 android:layout_row="0"
                 android:padding="8dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/windowBackground"/>
 
             <TextView
                 android:id="@+id/genderViewer"
@@ -45,7 +50,9 @@
                 android:textAlignment="viewEnd"
                 android:layout_row="0"
                 android:padding="8dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/windowBackground"/>
 
             <TextView
                 android:id="@+id/nextVaccineList"
@@ -57,7 +64,9 @@
                 android:layout_row="1"
                 android:padding="8dp"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/windowBackground"/>
 
             <TextView
                 android:id="@+id/offsetViewer"
@@ -68,7 +77,9 @@
                 android:textAlignment="viewEnd"
                 android:layout_row="1"
                 android:padding="8dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/windowBackground"/>
 
         </GridLayout>
 
