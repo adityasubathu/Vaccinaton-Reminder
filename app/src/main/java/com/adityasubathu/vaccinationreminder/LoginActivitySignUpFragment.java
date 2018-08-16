@@ -27,8 +27,9 @@ import java.util.Objects;
 
 public class LoginActivitySignUpFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
     static String email, password, username, fullName;
+    public static String activeUsername;
     EditText emailSignupField, usernameSignupField, passwordSignupField, passwordConfirmSignupField, fullNameSignupField;
-    SharedPreferences mySharedPrefs;
+    SharedPreferences mySharedPrefs, loginFlagPrefs;
     TextView loginLauncherTextView;
     View v;
     Button signupButton;
@@ -96,7 +97,8 @@ public class LoginActivitySignUpFragment extends Fragment implements View.OnClic
         password = passwordSignupField.getText().toString();
         String confirmPassword = passwordConfirmSignupField.getText().toString();
 
-        mySharedPrefs = Objects.requireNonNull(getActivity()).getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        mySharedPrefs = Objects.requireNonNull(getActivity()).getSharedPreferences(username, Context.MODE_PRIVATE);
+        loginFlagPrefs = getActivity().getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
 
         String storedEmail = mySharedPrefs.getString("email", null);
         String storedUsername = mySharedPrefs.getString("username", null);
@@ -129,15 +131,17 @@ public class LoginActivitySignUpFragment extends Fragment implements View.OnClic
         } else {
 
             SharedPreferences.Editor e = mySharedPrefs.edit();
+            SharedPreferences.Editor e1 = loginFlagPrefs.edit();
 
             e.putString("username", username);
             e.putString("password", password);
             e.putString("email", email);
             e.putString("fullName", fullName);
-            e.putBoolean("login", true);
-
+            e1.putBoolean("loggedIn", true);
+            e1.putString("activeUser", username);
+            activeUsername = username;
             e.apply();
-
+            e1.apply();
             Intent i = new Intent(getActivity(), MainFragmentHolder.class);
             startActivity(i);
             getActivity().finish();

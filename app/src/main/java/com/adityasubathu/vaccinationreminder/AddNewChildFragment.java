@@ -43,7 +43,7 @@ public class AddNewChildFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        helper = new databaseHandler(getActivity());
+        helper = new databaseHandler(getActivity(), LoginActivitySignUpFragment.activeUsername);
 
         final RadioGroup childGenderRadioGroup = v.findViewById(R.id.addChildRadioGroup);
 

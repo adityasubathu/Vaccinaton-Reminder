@@ -31,7 +31,7 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
     EditText usernameField, passwordField;
     TextView signUpLauncherTextView;
     Button loginButton;
-    SharedPreferences mySharedPrefs;
+    SharedPreferences mySharedPrefs, loginFlagPrefs;
     View v;
     ImageView passwordVisible;
 
@@ -137,7 +137,8 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
         username = usernameField.getText().toString();
         password = passwordField.getText().toString();
 
-        mySharedPrefs = Objects.requireNonNull(getActivity()).getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        mySharedPrefs = Objects.requireNonNull(getActivity()).getSharedPreferences(username, Context.MODE_PRIVATE);
+        loginFlagPrefs = getActivity().getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
 
         storedUsername = mySharedPrefs.getString("username", null);
         storedPassword = mySharedPrefs.getString("password", null);
@@ -157,11 +158,13 @@ public class LoginActivityLoginFragment extends Fragment implements View.OnClick
             }
 
         } else if (username.equals(storedUsername) && !password.equals(storedPassword)) {
-            changeColorToRed(passwordField, "Password in Incorrect");
+            changeColorToRed(passwordField, "Password is Incorrect");
         } else if (username.equals(storedUsername) && password.equals(storedPassword)) {
 
-            SharedPreferences.Editor e = mySharedPrefs.edit();
-            e.putBoolean("login", true);
+            SharedPreferences.Editor e = loginFlagPrefs.edit();
+            e.putString("activeUser", username);
+            LoginActivitySignUpFragment.activeUsername = username;
+            e.putBoolean("loggedIn", true);
             e.apply();
 
             Intent i = new Intent(getActivity(), MainFragmentHolder.class);

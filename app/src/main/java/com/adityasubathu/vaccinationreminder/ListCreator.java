@@ -38,7 +38,7 @@ public class ListCreator {
     public List<String> getDOBList(Context context) {
 
         List<String> DOBList = new ArrayList<>();
-        databaseHandler helper = new databaseHandler(context);
+        databaseHandler helper = new databaseHandler(context, LoginActivitySignUpFragment.activeUsername);
 
         String data = helper.getData();
 
@@ -57,7 +57,7 @@ public class ListCreator {
     public List<String> getChildrenList(Context context) {
 
         List<String> childrenList = new ArrayList<>();
-        databaseHandler helper = new databaseHandler(context);
+        databaseHandler helper = new databaseHandler(context, LoginActivitySignUpFragment.activeUsername);
 
         String data = helper.getData();
 
@@ -76,7 +76,7 @@ public class ListCreator {
     public List<String> getGenderList(Context context) {
 
         List<String> genderList = new ArrayList<>();
-        databaseHandler helper = new databaseHandler(context);
+        databaseHandler helper = new databaseHandler(context, LoginActivitySignUpFragment.activeUsername);
 
         String data = helper.getData();
 

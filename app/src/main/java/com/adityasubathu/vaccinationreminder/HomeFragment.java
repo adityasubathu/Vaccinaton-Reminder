@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
 
         final ExpandableListView lv = v.findViewById(R.id.childListView);
 
-        helper = new databaseHandler(getActivity());
+        helper = new databaseHandler(getActivity(), LoginActivitySignUpFragment.activeUsername);
 
         childrenList = listCreator.getChildrenList(getActivity());
         DOBList = listCreator.getDOBList(getActivity());
@@ -96,9 +96,9 @@ public class HomeFragment extends Fragment {
 
         if (item.getItemId() == R.id.logout) {
 
-            SharedPreferences mySharedPrefs = Objects.requireNonNull(getActivity()).getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+            SharedPreferences mySharedPrefs = Objects.requireNonNull(getActivity()).getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
             SharedPreferences.Editor e = mySharedPrefs.edit();
-            e.putBoolean("login", false);
+            e.putBoolean("loggedIn", false);
             e.apply();
             Intent i = new Intent(getActivity(), LoginActivity.class);
             startActivity(i);

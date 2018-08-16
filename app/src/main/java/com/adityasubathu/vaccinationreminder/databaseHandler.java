@@ -11,13 +11,13 @@ public class databaseHandler {
 
     private myDbHelper myHelper;
 
-    databaseHandler(Context context) {
-        myHelper = new myDbHelper(context);
+    databaseHandler(Context context, String username) {
+        myHelper = new myDbHelper(context, username);
     }
 
 
     public long insertData(String name, String dob, String gender) {
-
+        myHelper.createNewTable();
         SQLiteDatabase dbb = myHelper.getWritableDatabase();  //opening database
         ContentValues contentValues = new ContentValues();
         contentValues.put(myDbHelper.NAME, name);
@@ -30,6 +30,7 @@ public class databaseHandler {
 
     public String getData() {
 
+        myHelper.createNewTable();
         SQLiteDatabase db = myHelper.getReadableDatabase();
         String[] columns = {myDbHelper.UID, myDbHelper.NAME, myDbHelper.DATE_OF_BIRTH, myDbHelper.GENDER};
 
@@ -51,10 +52,10 @@ public class databaseHandler {
 
     }
 
-    public void delete(String childname) {
-
+    public void delete(String childName) {
+        myHelper.createNewTable();
         SQLiteDatabase db = myHelper.getWritableDatabase();
-        String[] whereArgs = {childname};
+        String[] whereArgs = {childName};
 
         db.delete(myDbHelper.TABLE_NAME, myDbHelper.NAME + " = ?", whereArgs);
     }
@@ -62,32 +63,39 @@ public class databaseHandler {
 
     static class myDbHelper extends SQLiteOpenHelper {
 
-        private static final String DATABASE_NAME = "childrenDatabase";    // Database Name
-        private static final String TABLE_NAME = "myTable";            // Table Name
-        private static final int DATABASE_Version = 1;               // Database Version
-        private static final String UID = "_id";                      // Column I (Primary Key)
-        private static final String NAME = "Name";                   // Column II
-        private static final String DATE_OF_BIRTH = "DOB";         // Column III
-        private static final String GENDER = "Gender";            // Column IV
-        private Context context;
+        private static final String DATABASE_NAME = "vaccinationReminder.db";                 // Database Name
+        private static String TABLE_NAME;             // Table Name
+        private static int DATABASE_Version = 1;                                                   // Database Version
+        private static final String UID = "_id";                                                  // Column I (Primary Key)
+        private static final String NAME = "Name";                                                // Column II
+        private static final String DATE_OF_BIRTH = "DOB";                                       // Column III
+        private static final String GENDER = "Gender";                                            // Column IV
+        //private Context context;
 
-        myDbHelper(Context context) {
-
+        myDbHelper(Context context, String username) {
             super(context, DATABASE_NAME, null, DATABASE_Version);
-            this.context = context;
+            TABLE_NAME = username;
+            //this.context = context;
         }
 
+        @Override
         public void onCreate(SQLiteDatabase db) {
             try {
-
-                db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(255) ," + DATE_OF_BIRTH + " VARCHAR(225)," + GENDER + " VARCHAR(255));");
+                createNewTable();
             } catch (Exception e) {
-                Message.message(context, "" + e);
+                e.printStackTrace();
             }
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            DATABASE_Version = newVersion;
+        }
+
+        void createNewTable() {
+            String command = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " VARCHAR(255) ," + DATE_OF_BIRTH + " VARCHAR(225)," + GENDER + " VARCHAR(255));";
+            SQLiteDatabase db = getWritableDatabase();
+            db.execSQL(command);
         }
     }
 }

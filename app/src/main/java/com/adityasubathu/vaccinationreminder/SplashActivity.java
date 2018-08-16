@@ -8,18 +8,19 @@ import android.support.v7.app.AppCompatActivity;
 public class SplashActivity extends AppCompatActivity {
 
     public static String publicUsername;
-    SharedPreferences mySharedPrefs;
-    String storedName;
-    boolean loginFlag;
+    SharedPreferences mySharedPrefs, loginFlagPrefs;
+    String activeUser;
+    boolean loggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mySharedPrefs = getSharedPreferences("userInfo", MODE_PRIVATE);
-        loginFlag = mySharedPrefs.getBoolean("login", false);
-        storedName = mySharedPrefs.getString("username", null);
+        loginFlagPrefs = getSharedPreferences("loginInfo", MODE_PRIVATE);
+        activeUser = loginFlagPrefs.getString("activeUser", null);
+        loggedIn = loginFlagPrefs.getBoolean("loggedIn", false);
+
         new Thread() {
 
             public void run() {
@@ -30,16 +31,16 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                if (!loginFlag) {
+                if (!loggedIn) {
                     Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(i);
                     finish();
 
-                    if (storedName != null && !storedName.isEmpty()) {
-                        publicUsername = storedName;
+                    if (activeUser != null && !activeUser.isEmpty()) {
+                        publicUsername = activeUser;
                     }
                 } else {
-
+                    LoginActivitySignUpFragment.activeUsername = activeUser;
                     Intent i2 = new Intent(SplashActivity.this, MainFragmentHolder.class);
                     startActivity(i2);
                     finish();
