@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -11,6 +11,13 @@
     <style name="VaccineReminderMaterialTheme" parent="VaccineReminderMaterialTheme.Base">
 
     </style>
+    <style name="VaccineReminderMaterialDialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorBlack</item>
+    </style>
 
     <style name="VaccineReminderMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
@@ -18,7 +25,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="cardViewStyle">@style/CardView</item>
+        <item name="cardViewStyle" tools:ignore="PrivateResource">@style/CardView</item>
     </style>
 
     <style name="toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
