@@ -25,7 +25,8 @@
             android:hint="@string/username"
             android:inputType="textNoSuggestions"
             android:padding="12dp"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:autofillHints="@string/username" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -42,7 +43,8 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="12dp"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:autofillHints="@string/password" />
 
             <ImageView
                 android:id="@+id/password_login_visibility"

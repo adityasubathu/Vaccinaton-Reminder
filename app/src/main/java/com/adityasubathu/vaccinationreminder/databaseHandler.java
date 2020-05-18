@@ -28,7 +28,7 @@ public class databaseHandler {
 
     }
 
-    public String getData() {
+    String getData() {
 
         myHelper.createNewTable();
         SQLiteDatabase db = myHelper.getReadableDatabase();
@@ -52,7 +52,7 @@ public class databaseHandler {
 
     }
 
-    public void delete(String childName) {
+    void delete(String childName) {
         myHelper.createNewTable();
         SQLiteDatabase db = myHelper.getWritableDatabase();
         String[] whereArgs = {childName};
@@ -63,13 +63,13 @@ public class databaseHandler {
 
     static class myDbHelper extends SQLiteOpenHelper {
 
-        private static final String DATABASE_NAME = "vaccinationReminder.db";                 // Database Name
-        private static String TABLE_NAME;             // Table Name
-        private static int DATABASE_Version = 1;                                                   // Database Version
-        private static final String UID = "_id";                                                  // Column I (Primary Key)
-        private static final String NAME = "Name";                                                // Column II
-        private static final String DATE_OF_BIRTH = "DOB";                                       // Column III
-        private static final String GENDER = "Gender";                                            // Column IV
+        private static final String DATABASE_NAME = "vaccinationReminder.db";  // Database Name
+        private static String TABLE_NAME;                                      // Table Name
+        private static int DATABASE_Version = 1;                               // Database Version
+        private static final String UID = "_id";                               // Column I (Primary Key)
+        private static final String NAME = "Name";                             // Column II
+        private static final String DATE_OF_BIRTH = "DOB";                     // Column III
+        private static final String GENDER = "Gender";                         // Column IV
         //private Context context;
 
         myDbHelper(Context context, String username) {
