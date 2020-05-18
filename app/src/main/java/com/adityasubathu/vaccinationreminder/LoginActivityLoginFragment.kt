@@ -30,7 +30,7 @@ class LoginActivityLoginFragment : Fragment(), View.OnClickListener, OnTouchList
     private lateinit var passwordVisible: ImageView
 
     var password: String? = null
-    var username: String? = null
+    lateinit var username: String
     private var storedUsername: String? = null
     private var storedPassword: String? = null
 
@@ -80,7 +80,7 @@ class LoginActivityLoginFragment : Fragment(), View.OnClickListener, OnTouchList
 
     override fun onStart() {
         super.onStart()
-        if (SplashActivity.publicUsername != null && SplashActivity.publicUsername.isNotEmpty()) {
+        if (SplashActivity.publicUsername.isNotEmpty()) {
             usernameField.setText(SplashActivity.publicUsername)
             passwordField.requestFocus()
         } else {
@@ -95,8 +95,8 @@ class LoginActivityLoginFragment : Fragment(), View.OnClickListener, OnTouchList
         loginFlagPrefs = activity!!.getSharedPreferences("loginInfo", Context.MODE_PRIVATE)
         storedUsername = mySharedPrefs.getString("username", null)
         storedPassword = mySharedPrefs.getString("password", null)
-        if (username!!.isEmpty() || password!!.isEmpty() || username != storedUsername) {
-            if (username!!.isEmpty()) {
+        if (username.isEmpty() || password!!.isEmpty() || username != storedUsername) {
+            if (username.isEmpty()) {
                 changeColor(usernameField, "Please Enter Your Username", R.color.error_red)
             }
             if (password!!.isEmpty()) {

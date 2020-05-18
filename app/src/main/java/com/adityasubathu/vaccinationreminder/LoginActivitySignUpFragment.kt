@@ -63,7 +63,7 @@ class LoginActivitySignUpFragment : Fragment(), View.OnClickListener, OnTouchLis
             ft.replace(R.id.loginActivityFragmentHolder, loginFragmentObject, "LoginActivityLoginFragment")
             ft.commit()
         }
-        if (username != null && username!!.isNotEmpty()) {
+        if (username.isNotEmpty()) {
             usernameSignupField.setText(username)
         }
         if (password != null && password!!.isNotEmpty()) {
@@ -86,7 +86,7 @@ class LoginActivitySignUpFragment : Fragment(), View.OnClickListener, OnTouchLis
         loginFlagPrefs = activity!!.getSharedPreferences("loginInfo", Context.MODE_PRIVATE)
         val storedEmail = mySharedPrefs.getString("email", null)
         val storedUsername = mySharedPrefs.getString("username", null)
-        if (username!!.isEmpty() || password!!.isEmpty() || email!!.isEmpty() || fullName!!.isEmpty() || email == storedEmail || username == storedUsername || password != confirmPassword) {
+        if (username.isEmpty() || password!!.isEmpty() || email!!.isEmpty() || fullName!!.isEmpty() || email == storedEmail || username == storedUsername || password != confirmPassword) {
             if (fullName!!.isEmpty()) {
                 changeColor(fullNameSignupField, "Please Enter Your Name")
             }
@@ -96,7 +96,7 @@ class LoginActivitySignUpFragment : Fragment(), View.OnClickListener, OnTouchLis
             if (email!!.isEmpty()) {
                 changeColor(emailSignupField, "Please Enter Your Email")
             }
-            if (username!!.isEmpty()) {
+            if (username.isEmpty()) {
                 changeColor(usernameSignupField, "Please Enter a Username")
             }
             if (email == storedEmail) {
@@ -177,9 +177,8 @@ class LoginActivitySignUpFragment : Fragment(), View.OnClickListener, OnTouchLis
     companion object {
         var email: String? = null
         var password: String? = null
-        var username: String? = null
+        lateinit var username: String
         var fullName: String? = null
-        @JvmField
-        var activeUsername: String? = null
+        lateinit var activeUsername: String
     }
 }

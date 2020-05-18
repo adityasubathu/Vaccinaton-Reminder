@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
     private var v: View? = null
     private lateinit var childrenList: MutableList<String>
     private lateinit var dOBList: MutableList<String>
-    private var helper: databaseHandler? = null
+    private var helper: DatabaseHandler? = null
     private var alarm: AlarmManagerClass? = null
     private var listCreator = ListCreator()
 
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val lv = v!!.findViewById<ExpandableListView>(R.id.childListView)
-        helper = databaseHandler(activity, LoginActivitySignUpFragment.activeUsername)
+        helper = DatabaseHandler(activity, LoginActivitySignUpFragment.activeUsername)
         childrenList = activity?.let { listCreator.getChildrenList(it) }!!
         dOBList = listCreator.getDOBList(activity)
         val adap= ChildListAdapter(activity!!, childrenList, dOBList, DataHolder().vaccineList)

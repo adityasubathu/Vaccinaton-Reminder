@@ -21,7 +21,7 @@ class AddNewChildFragment : Fragment() {
     private var minute = 0
     private var childNameTextView: TextView? = null
     private var dateOfBirthTextView: TextView? = null
-    private var helper: databaseHandler? = null
+    private var helper: DatabaseHandler? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         v = inflater.inflate(R.layout.add_new_child_fragment, container, false)
         (Objects.requireNonNull(activity) as MainFragmentHolder).setActionBarTitle("Add Child")
@@ -30,7 +30,7 @@ class AddNewChildFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        helper = databaseHandler(activity, LoginActivitySignUpFragment.activeUsername)
+        helper = DatabaseHandler(activity, LoginActivitySignUpFragment.activeUsername)
         val childGenderRadioGroup = v!!.findViewById<RadioGroup>(R.id.addChildRadioGroup)
         childGenderRadioGroup.setOnCheckedChangeListener { _, _ -> selectedGenderId = childGenderRadioGroup.checkedRadioButtonId }
         val addChildConfirmButton = v!!.findViewById<Button>(R.id.addChildConfirmButton)

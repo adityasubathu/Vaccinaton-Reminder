@@ -7,7 +7,7 @@ import java.util.*
 class ListCreator {
     fun getDOBList(context: Context?): MutableList<String> {
         val dOBList: MutableList<String> = ArrayList()
-        val helper = databaseHandler(context, LoginActivitySignUpFragment.activeUsername)
+        val helper = DatabaseHandler(context, LoginActivitySignUpFragment.activeUsername)
         val data = helper.data
         val arr = data.split(" {2}").toTypedArray()
         for (i in arr.indices) {
@@ -20,7 +20,7 @@ class ListCreator {
 
     fun getChildrenList(context: Context): MutableList<String> {
         val childrenList: MutableList<String> = ArrayList()
-        val helper = databaseHandler(context, LoginActivitySignUpFragment.activeUsername)
+        val helper = DatabaseHandler(context, LoginActivitySignUpFragment.activeUsername)
         val data = helper.data
         val arr = data.split(" {2}").toTypedArray()
         for (i in arr.indices) {
@@ -33,7 +33,7 @@ class ListCreator {
 
     fun getGenderList(context: Context?): MutableList<String> {
         val genderList: MutableList<String> = ArrayList()
-        val helper = databaseHandler(context, LoginActivitySignUpFragment.activeUsername)
+        val helper = DatabaseHandler(context, LoginActivitySignUpFragment.activeUsername)
         val data = helper.data
         val arr = data.split(" {2}").toTypedArray()
         for (i in arr.indices) {

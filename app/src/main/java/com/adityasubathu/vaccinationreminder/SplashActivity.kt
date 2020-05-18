@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var loginFlagPrefs: SharedPreferences
-    var activeUser: String? = null
+    lateinit var activeUser: String
     var loggedIn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         loginFlagPrefs = getSharedPreferences("loginInfo", Context.MODE_PRIVATE)
-        activeUser = loginFlagPrefs.getString("activeUser", null)
+        activeUser = loginFlagPrefs.getString("activeUser", null).toString()
         loggedIn = loginFlagPrefs.getBoolean("loggedIn", false)
 
         object : Thread() {
@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
                     val i = Intent(this@SplashActivity, LoginActivity::class.java)
                     startActivity(i)
                     finish()
-                    if (activeUser != null && activeUser!!.isNotEmpty()) {
+                    if (activeUser.isNotEmpty()) {
                         publicUsername = activeUser
                     }
                 } else {
@@ -46,6 +46,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        var publicUsername: String? = null
+        lateinit var publicUsername: String
     }
 }
